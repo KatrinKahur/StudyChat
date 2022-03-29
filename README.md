@@ -1,0 +1,2 @@
+# StudyChat
+School project
