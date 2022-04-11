@@ -9,6 +9,13 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+.expo-shared/
+
+# WebStorm
+.idea/
 
 # macOS
 .DS_Store
+
+# Config files
+*Config.js
