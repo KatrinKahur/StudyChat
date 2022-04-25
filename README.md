@@ -1,3 +1,2 @@
 # StudyChat
 School project
-Test
