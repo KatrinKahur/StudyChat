@@ -10,6 +10,7 @@ npm-debug.*
 *.orig.*
 web-build/
 .expo-shared/
+package-lock.json
 
 # WebStorm
 .idea/
