@@ -1,18 +1,30 @@
+import { initializeApp } from "firebase/app";
+import { initializeAuth } from "firebase/auth";
+import { getReactNativePersistence } from "firebase/auth/react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import {firebaseConfig} from "./src/config/firebaseConfig";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import React from "react";
 import { View } from 'react-native';
 import SignInScreen from "./src/screens/signInScreen";
+import SignUpScreen from "./src/screens/signUpScreen";
+import MainScreen from "./src/screens/mainScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MainScreen from "./src/screens/mainScreen";
-import React from "react";
-import {auth} from "./src/config/firebaseConfig";
-import SignUpScreen from "./src/screens/signUpScreen";
+
 
 const Stack = createNativeStackNavigator();
 export default function App() {
   const[isSignedIn, setIsSignedIn] = React.useState(null);
+  React.useEffect(async () => {
+    const defaultApp = initializeApp(firebaseConfig);
+    initializeAuth(defaultApp, {
+      persistence: getReactNativePersistence(AsyncStorage),
+    });
+  }, []);
 
   React.useEffect(function (){
-    auth.onAuthStateChanged(function (user){
+    onAuthStateChanged(getAuth(), function (user){
       if(user){
         setIsSignedIn(true);
       }
@@ -20,7 +32,7 @@ export default function App() {
         setIsSignedIn(false);
       }
     });
-  }, [])
+  }, []);
 
   return (
       <NavigationContainer>{

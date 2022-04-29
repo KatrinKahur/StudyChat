@@ -1,14 +1,16 @@
-import {auth} from "../config/firebaseConfig";
+import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
 
 const AuthUser = {
     signIn(email, password){
-        auth.signInWithEmailAndPassword(email, password)
-            .catch(error => window.alert(error.message));
+            signInWithEmailAndPassword(getAuth(), email, password).then(()=>{
+            }).catch(error=>window.alert(error.message));
     },
     
     signOut(){
-        auth.signOut().then(() => window.alert("You are logged out."))
+         signOut(getAuth()).then(() =>{
+            window.alert("You are logged out.");
+        })
         .catch(error => window.alert(error.message));
     }
 }
