@@ -17,10 +17,15 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   const[isSignedIn, setIsSignedIn] = React.useState(null);
   React.useEffect(async () => {
-    const defaultApp = initializeApp(firebaseConfig);
-    initializeAuth(defaultApp, {
-      persistence: getReactNativePersistence(AsyncStorage),
-    });
+    try {
+      const defaultApp = initializeApp(firebaseConfig);
+      initializeAuth(defaultApp, {
+        persistence: getReactNativePersistence(AsyncStorage),
+      });
+    } catch {
+      // Ignore error because I must initialize auth again in order to get persistence, but re-initializing will always
+      // throw an error.
+    }
   }, []);
 
   React.useEffect(function (){
