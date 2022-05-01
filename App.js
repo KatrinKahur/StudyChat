@@ -5,7 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {firebaseConfig} from "./src/config/firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import React from "react";
-import { View } from 'react-native';
+import { View, Platform, Text } from 'react-native';
 import SignInScreen from "./src/screens/signInScreen";
 import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
@@ -43,15 +43,19 @@ export default function App() {
       <NavigationContainer>{
         isSignedIn ? (
                 <Stack.Navigator initialRouteName="Main">
-                  <Stack.Screen name="Main" component={MainScreen} />
+                  <Stack.Screen name="Main"
+                                component={MainScreen} />
                 </Stack.Navigator>
             ) :
             (isSignedIn === null)? (
-                    <View style={{backgroundColor: "white"}}></View>
+                    <View style={{backgroundColor: "white"}}><Text>Loading</Text></View>
                 ) :
                 (<Stack.Navigator initialRouteName="Sign-in">
-                  <Stack.Screen name="Sign-in" component={SignInScreen}/>
-                  <Stack.Screen name="Sign-up" component={SignUpScreen} />
+                  <Stack.Screen options={{headerShown: Platform.OS !== "web"}}
+                                name="Sign-in"
+                                component={SignInScreen}/>
+                  <Stack.Screen name="Sign-up"
+                                component={SignUpScreen} />
                 </Stack.Navigator>)
       }
       </NavigationContainer>
