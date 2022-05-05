@@ -5,3 +5,4 @@ export default function SignUpScreen(){
         <View><Text>Sign-up screen</Text></View>
     )
 }
+

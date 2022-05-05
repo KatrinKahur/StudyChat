@@ -1,24 +1,25 @@
 import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
 
-
 const AuthUser = {
     signIn(email, password){
             signInWithEmailAndPassword(getAuth(), email, password).then(()=>{
             }).catch((error)=>{
                 if(error.message === "Firebase: Error (auth/wrong-password).")
-                    alert("Invalid password.");
+                    window.alert("Invalid password.");
                 else if(error.message === "Firebase: Error (auth/invalid-email).")
-                    alert("Invalid email.");
+                    window.alert("Invalid email.");
+                else if(error.message === "Firebase: Error (auth/user-not-found).")
+                    window.alert("User not found.");
                 else
-                    alert("Something went wrong. Please try again.");
+                    window.alert(error.message);
             });
     },
     
     signOut(){
          signOut(getAuth()).then(() =>{
-            alert("You are logged out.");
+            window.alert("You are logged out.");
         })
-        .catch(error => alert(error.message));
+        .catch(error => window.alert(error.message));
     }
 }
 
