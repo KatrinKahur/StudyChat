@@ -12,7 +12,6 @@ import MainScreen from "./src/screens/mainScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-
 const Stack = createNativeStackNavigator();
 export default function App() {
   const[isSignedIn, setIsSignedIn] = React.useState(null);
