@@ -26,7 +26,7 @@ export default function SignInScreen( {navigation} ){
                         <PasswordInput onChangeText={(e) => setPassword(e)} value={password} />
                     </View>
                     <View style={styles.buttonContainer}>
-                        <Pressable style={styles.button}
+                        <Pressable testID="signInBtn" style={styles.button}
                                    onPress={()=>{
                                        if((email === "") && (password === ""))
                                            window.alert("Please fill in the credentials.");
@@ -39,7 +39,7 @@ export default function SignInScreen( {navigation} ){
                                    }} ><Text style={styles.buttonTitle}>Sign in</Text>
                         </Pressable>
                         <Text style={styles.noAccountYetText}>No account yet? </Text>
-                        <Pressable style={styles.button}
+                        <Pressable testID="signUpBtn" style={styles.button}
                                    onPress={()=>{navigation.push("Sign-up")}}>
                             <Text style={styles.buttonTitle}>Click here to create one!</Text>
                         </Pressable>
@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     buttonTitle: {
-        fontSize:  Platform.OS === 'web'? 20 : 15
+        fontSize:  Platform.OS === 'web'? 20 : 15,
+        color: `#ffffff`
     },
     buttonContainer: {
         width: Platform.OS === 'web'? "15%" : "55%",

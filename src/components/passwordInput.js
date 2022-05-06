@@ -6,7 +6,8 @@ export const PasswordInput = ({onChangeText, value}) => {
     return(
         <View style={styles.container}>
             <FontAwesome5 name="lock" size={24} color="black" />
-            <TextInput style={styles.input} value={value}
+            <TextInput testID="passwordInput"
+                       style={styles.input} value={value}
                        secureTextEntry={true}
                        onChangeText = {onChangeText} placeholder="Password.."/>
         </View>

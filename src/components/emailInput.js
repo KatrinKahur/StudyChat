@@ -5,7 +5,7 @@ export const EmailInput = ({onChangeText, value}) => {
     return(
         <View style={styles.container}>
             <FontAwesome name="user" size={24} color="black" />
-            <TextInput style={styles.input} value={value}
+            <TextInput testID="emailInput" style={styles.input} value={value}
                        onChangeText={onChangeText}
                        placeholder="Email.."/>
         </View>
