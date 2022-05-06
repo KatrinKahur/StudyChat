@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
         marginVertical: 10
     },
     input: {
+        width: "100%",
         fontSize: Platform.OS === 'web'? 20 : 17,
         paddingLeft: 15,
         paddingVertical: 3,
