@@ -4,7 +4,17 @@ import { NavigationContainer } from "@react-navigation/native";
 //test
 import {getDatabase, ref, set} from "firebase/database";
 
-export default function MainScreen(props){
+/*function writeUserData(userId, name, email, imageUrl) {
+    set(ref(getDatabase(), 'users/' + userId), {
+        username: name,
+        email: email,
+        profile_picture : imageUrl
+    });
+  }*/
+
+//writeUserData(34532, 'Oscar', 'oscar.maddison@hotmail.com', null)
+
+export default function MainScreen(){
     return(<>
         <View>
             <Text style ={{size: 10, alignItems: 'center', justifyContent: 'center'}}>
@@ -17,14 +27,13 @@ export default function MainScreen(props){
 
         <FlatList>
             Array Data = {};
-            //mainScreen = props.userList
-            //props.userList = firebase.database.ref('userList')
+            mainScreen = getDatabase()
             mainScreen.forEach(user; mainScreen)
         </FlatList>
     </>)
 }
 
-const [mainScreenList, setMainScreenList] = useState(props.userList);
+/*const [mainScreenList, setMainScreenList] = useState(props.userList);
 useEffect(() => {
     function createMainScreenList(mainScreen) {
         setMainScreenList(props.userList);
@@ -41,4 +50,4 @@ props.userList.on('child_removed', (deletedUser));{
 
 props.userList.on('child_changed');{
     setMainScreenList(props.userList);
-}
+}*/

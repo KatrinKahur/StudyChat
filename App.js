@@ -14,9 +14,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //test
 import {getDatabase, ref, set} from "firebase/database";
 
-<<<<<<< Updated upstream
-=======
-firebase.database().ref('userList').set({value: 'hej'})
+const database = getDatabase();
 
 const model = new appModel();
 
@@ -26,7 +24,6 @@ set(ref(getDatabase(), 'userList/' + userId), {
   full_name: 'namn förnamn'
 });
 
->>>>>>> Stashed changes
 const Stack = createNativeStackNavigator();
 export default function App() {
   const[isSignedIn, setIsSignedIn] = React.useState(null);
