@@ -1,12 +1,9 @@
 //import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform} from 'react-native';
 import { TextInput } from 'react-native';
+import {getAuth, createUserWithEmailAndPassword } from "firebase/auth"
 import {FontAwesome, FontAwesome5} from '@expo/vector-icons';
-
-//import { borderBottomColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-import firebase from '../config/firebaseConfig';
-
 
 export default class Signup extends Component {
   constructor() {
@@ -30,9 +27,8 @@ export default class Signup extends Component {
       this.setState({
         isLoading: true,
       })
-      firebase
-      .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      
+      createUserWithEmailAndPassword(getAuth(),this.state.email, this.state.password)
       .then((res) => {
         res.user.updateProfile({
           displayName: this.state.displayName
@@ -124,7 +120,7 @@ const styles = StyleSheet.create({
       alignSelf: 'stretch',
       height: 40,
       marginBottom: 30,
-      color: '#fff',
+      color: '#000000',
       borderBottomColor: '#f8f8f8',
       borderBottomWidth: 1,
   },
