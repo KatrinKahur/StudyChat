@@ -85,7 +85,8 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     buttonTitle: {
-        fontSize:  Platform.OS === 'web'? 20 : 15
+        fontSize:  Platform.OS === 'web'? 20 : 15,
+        color: `#ffffff`
     },
     buttonContainer: {
         width: Platform.OS === 'web'? "15%" : "55%",

@@ -4,7 +4,7 @@ import { getReactNativePersistence } from "firebase/auth/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {firebaseConfig} from "./src/config/firebaseConfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import React from "react";
+import * as React from 'react';
 import { View, Platform, Text } from 'react-native';
 import SignInScreen from "./src/screens/signInScreen";
 import SignUpScreen from "./src/screens/signUpScreen";
