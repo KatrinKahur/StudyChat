@@ -11,7 +11,22 @@ import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+//test
+import {getDatabase, ref, set} from "firebase/database";
 
+<<<<<<< Updated upstream
+=======
+firebase.database().ref('userList').set({value: 'hej'})
+
+const model = new appModel();
+
+//skapar databas för test
+const userId = 1
+set(ref(getDatabase(), 'userList/' + userId), {
+  full_name: 'namn förnamn'
+});
+
+>>>>>>> Stashed changes
 const Stack = createNativeStackNavigator();
 export default function App() {
   const[isSignedIn, setIsSignedIn] = React.useState(null);
@@ -42,8 +57,7 @@ export default function App() {
       <NavigationContainer>{
         isSignedIn ? (
                 <Stack.Navigator initialRouteName="Main">
-                  <Stack.Screen name="Main"
-                                component={MainScreen} />
+                  <Stack.Screen name="Main" children = {() => < MainScreen userList = {AppModel.userList}/>}/>
                 </Stack.Navigator>
             ) :
             (isSignedIn === null)? (
