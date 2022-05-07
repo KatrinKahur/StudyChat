@@ -31,6 +31,10 @@ export default function MainScreen(){
             mainScreen.forEach(user; mainScreen)
         </FlatList>
     </>)
+    //Från katrin
+    /*return(
+        <View style={{selfAlign: "center", marginHorizontal: "45%", marginVertical: "25%"}}><Button title="Logout" onPress={()=>AuthUser.signOut()}/></View>
+    )*/
 }
 
 /*const [mainScreenList, setMainScreenList] = useState(props.userList);
