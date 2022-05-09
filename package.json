@@ -13,6 +13,7 @@
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
     "@react-navigation/native-stack": "^6.6.2",
+    "@testing-library/jest-native": "^4.0.4",
     "expo": "^44.0.0",
     "expo-status-bar": "~1.2.0",
     "firebase": "^9.6.11",
@@ -38,6 +39,10 @@
     "preset": "jest-expo",
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
-    ]
+    ],
+    "globals": {
+      "__DEV__": true,
+      "__RCTProfileIsProfiling": false
+    }
   }
 }
