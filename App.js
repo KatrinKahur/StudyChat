@@ -11,24 +11,13 @@ import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-<<<<<<< HEAD
-//test
-import {getDatabase, ref, set} from "firebase/database";
-
-const database = getDatabase();
-
-const model = new appModel();
-
-//skapar databas för test
-const userId = 1
-set(ref(getDatabase(), 'userList/' + userId), {
-  full_name: 'namn förnamn'
-});
-=======
 import {ActivityIndicator} from "react-native";
->>>>>>> 3c017ce38f8d10b430b05b0311ec3779801631f1
+import ChatScreen from "./src/screens/chatScreen";
+import ContactListScreen from "./src/screens/contactListScreen";
+import AppModel from "./src/appModel";
 
 const Stack = createNativeStackNavigator();
+const appModel = new AppModel();
 export default function App() {
     const[isSignedIn, setIsSignedIn] = React.useState(null);
     React.useEffect(async () => {
@@ -47,41 +36,22 @@ export default function App() {
         onAuthStateChanged(getAuth(), function (user){
             if(user){
                 setIsSignedIn(true);
+                appModel.setUserId(user.uid);
             } else {
                 setIsSignedIn(false);
+                appModel.setUserId(null);
             }
         });
     }, []);
 
-<<<<<<< HEAD
-  return (
-      <NavigationContainer>{
-        isSignedIn ? (
-                <Stack.Navigator initialRouteName="Main">
-                  <Stack.Screen name="Main" children = {() => < MainScreen userList = {AppModel.userList}/>}/>
-                </Stack.Navigator>
-            ) :
-            (isSignedIn === null)? (
-                    <View style={{backgroundColor: "white"}}><Text>Loading</Text></View>
-                ) :
-                (<Stack.Navigator initialRouteName="Sign-in">
-                  <Stack.Screen options={{headerShown: Platform.OS !== "web"}}
-                                name="Sign-in"
-                                component={SignInScreen}/>
-                  <Stack.Screen name="Sign-up"
-                                component={SignUpScreen} />
-                </Stack.Navigator>)
-      }
-      </NavigationContainer>
-  );
-}
-=======
     return (
         <NavigationContainer>
             {isSignedIn ?
                 (
                     <Stack.Navigator initialRouteName="Main">
                         <Stack.Screen name="Main" component={MainScreen} />
+                        <Stack.Screen name="Chat" component={ChatScreen} />
+                        <Stack.Screen name="Contact list" component={ContactListScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
                 (
@@ -101,4 +71,3 @@ export default function App() {
           </NavigationContainer>
     );
 }
->>>>>>> 3c017ce38f8d10b430b05b0311ec3779801631f1
