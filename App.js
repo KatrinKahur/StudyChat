@@ -13,7 +13,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //test
 import {getDatabase, ref, set} from "firebase/database";
-import appModel from "./src/screens/appModel";
+import appModel from "./src/appModel";
 
 //const database = getDatabase();
 
