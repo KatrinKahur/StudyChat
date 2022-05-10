@@ -11,10 +11,10 @@ import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-<<<<<<< Updated upstream
 //test
-import {getDatabase, ref, set} from "firebase/database";
-import appModel from "./src/appModel";
+//import {getDatabase, ref, set} from "firebase/database";
+//import appModel from "./src/appModel";
+import {ActivityIndicator} from "react-native";
 
 //const database = getDatabase();
 
@@ -24,11 +24,8 @@ import appModel from "./src/appModel";
 /*const userId = 1
 set(ref(getDatabase(), 'userList/' + userId), {
   full_name: 'namn förnamn'
-});
-import {ActivityIndicator} from "react-native"
-=======
-import {ActivityIndicator} from "react-native";
->>>>>>> Stashed changes
+});*/
+
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -55,28 +52,6 @@ export default function App() {
         });
     }, []);
 
-<<<<<<< Updated upstream
-  return (
-      <NavigationContainer>{
-        isSignedIn ? (
-                <Stack.Navigator initialRouteName="Main">
-                  <Stack.Screen name="Main" component={MainScreen}/*children = {() => < MainScreen userList = {AppModel.userList}/>}*//>
-                </Stack.Navigator>
-            ) :
-            (isSignedIn === null)? (
-                    <View style={{backgroundColor: "white"}}><Text>Loading</Text></View>
-                ) :
-                (<Stack.Navigator initialRouteName="Sign-in">
-                  <Stack.Screen options={{headerShown: Platform.OS !== "web"}}
-                                name="Sign-in"
-                                component={SignInScreen}/>
-                  <Stack.Screen name="Sign-up"
-                                component={SignUpScreen} />
-                </Stack.Navigator>)
-      }
-      </NavigationContainer>
-  );
-=======
     return (
         <NavigationContainer>
             {isSignedIn ?
@@ -101,5 +76,4 @@ export default function App() {
           }
           </NavigationContainer>
     );
->>>>>>> Stashed changes
 }

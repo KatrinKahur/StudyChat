@@ -1,5 +1,5 @@
 class AppModel{
-    constructor(){
+    /*constructor(){
         this.observers = []
         this.userList = firebase.database().ref('userList');
     };
@@ -23,5 +23,5 @@ class AppModel{
 
     setMainScreen(userList){
         this.userList = userList;
-    }
+    }*/
 }

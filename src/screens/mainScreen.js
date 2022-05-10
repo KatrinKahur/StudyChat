@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Button, View, Text, Flatlist } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 //test
-import {getDatabase, ref, set} from "firebase/database";
+//import {getDatabase, ref, set} from "firebase/database";
 
 /*function writeUserData(userId, name, email, imageUrl) {
     set(ref(getDatabase(), 'users/' + userId), {
