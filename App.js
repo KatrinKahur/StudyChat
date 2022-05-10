@@ -13,13 +13,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 //test
 import {getDatabase, ref, set} from "firebase/database";
+import appModel from "./src/screens/appModel";
 
-const database = getDatabase();
+//const database = getDatabase();
 
-const model = new appModel();
+//const model = new appModel();
 
 //skapar databas för test
-const userId = 1
+/*const userId = 1
 set(ref(getDatabase(), 'userList/' + userId), {
   full_name: 'namn förnamn'
 });
@@ -50,29 +51,24 @@ export default function App() {
         });
     }, []);
 
-
-    return (
-        <NavigationContainer>
-            {isSignedIn ?
-                (
-                    <Stack.Navigator initialRouteName="Main">
-                        <Stack.Screen name="Main" component={MainScreen} />
-                    </Stack.Navigator>
-                ) : (isSignedIn === null) ?
-                (
-                    <ActivityIndicator size="large" />
-                ) : (
-                    <Stack.Navigator initialRouteName="Sign-in">
-                      <Stack.Screen
-                          options={{headerShown: Platform.OS !== "web"}}
-                          name="Sign-in"
-                          component={SignInScreen}/>
-                      <Stack.Screen
-                          name="Sign-up"
-                          component={SignUpScreen} />
-                    </Stack.Navigator>
-                    )
-          }
-          </NavigationContainer>
-    );
+  return (
+      <NavigationContainer>{
+        isSignedIn ? (
+                <Stack.Navigator initialRouteName="Main">
+                  <Stack.Screen name="Main" component={MainScreen}/*children = {() => < MainScreen userList = {AppModel.userList}/>}*//>
+                </Stack.Navigator>
+            ) :
+            (isSignedIn === null)? (
+                    <View style={{backgroundColor: "white"}}><Text>Loading</Text></View>
+                ) :
+                (<Stack.Navigator initialRouteName="Sign-in">
+                  <Stack.Screen options={{headerShown: Platform.OS !== "web"}}
+                                name="Sign-in"
+                                component={SignInScreen}/>
+                  <Stack.Screen name="Sign-up"
+                                component={SignUpScreen} />
+                </Stack.Navigator>)
+      }
+      </NavigationContainer>
+  );
 }

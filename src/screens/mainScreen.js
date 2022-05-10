@@ -20,16 +20,16 @@ export default function MainScreen(){
             <Text style ={{size: 10, alignItems: 'center', justifyContent: 'center'}}>
                 StudyChat
             </Text>
-            <Button onClick = {() => NavigationContainer.navigate('profile')}/>
-            //Ska ocskå ha kod så att man blir utloggad
-            <Button onClick = {() => NavigationContainer.navigate('singIn')}/>
+            <Button onClick = {() => {}/*NavigationContainer.navigate('profile')*/}/>
+            {/*Ska ocskå ha kod så att man blir utloggad*/}
+            <Button onClick = {() => {} /*NavigationContainer.navigate('singIn')*/}/>
         </View>
 
-        <FlatList>
+        {/*<FlatList>
             Array Data = {};
             mainScreen = getDatabase()
             mainScreen.forEach(user; mainScreen)
-        </FlatList>
+    </FlatList>*/}
     </>)
     //Från katrin
     /*return(
