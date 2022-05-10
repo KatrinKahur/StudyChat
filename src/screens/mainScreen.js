@@ -1,8 +1,9 @@
 import AuthUser from "../external/authUser";
 import {AlertMessageComponent} from "../components/alertMessageComponent";
 import React, { useState } from 'react';
-import { Button, View, Text, Flatlist } from 'react-native';
+import { Button, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
+import { Platform } from "react-native-web";
 //test
 //import {getDatabase, ref, set} from "firebase/database";
 
@@ -19,12 +20,12 @@ import { NavigationContainer } from "@react-navigation/native";
 export default function MainScreen(){
     return(<>
         <View>
-            <Text style ={{size: 10, alignItems: 'center', justifyContent: 'center'}}>
+            <Text style ={styles.appName}>
                 StudyChat
             </Text>
             <Button onClick = {() => {}/*NavigationContainer.navigate('profile')*/}/>
             {/*Ska ocskå ha kod så att man blir utloggad*/}
-            <Button onClick = {() => {} /*NavigationContainer.navigate('singIn')*/}/>
+            <Button onClick = {() => {setAuthStatus(0)}}/>
         </View>
 
         {/*<FlatList>
@@ -39,6 +40,42 @@ export default function MainScreen(){
     )*/
 }
 
+const styles = StyleSheet.create({
+    view: {
+        alignText: "center",
+        justifyContent: "center",
+        display: "flex",
+        width: "100%",
+        height: "100%"
+    },
+    appNameText: {
+        fontSize: Platform.OS === 'web' ? 50 : 30,
+        ontWeight: "bold",
+        alignSelf: "center",
+        color: "blue"
+    },
+    signOutButton: {
+        justifyContent: "center",
+        display: "flex",
+        width: "33%",
+        flexDirection: "row",
+        backgroundColor: "white"
+    },
+    signOutText: {
+        alignSelf: "center",
+        display: "flex",
+        width: "33%",
+        flexDirection: "row",
+    },
+    contactList: {
+        justifyContent: "center",
+        alignSelf: "center",
+        display: "flex",
+        width: "25%",
+        height: 60,
+        flexDirection: "column",
+    },
+})
 /*const [mainScreenList, setMainScreenList] = useState(props.userList);
 useEffect(() => {
     function createMainScreenList(mainScreen) {
