@@ -11,6 +11,7 @@ import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+<<<<<<< Updated upstream
 //test
 import {getDatabase, ref, set} from "firebase/database";
 import appModel from "./src/appModel";
@@ -25,6 +26,9 @@ set(ref(getDatabase(), 'userList/' + userId), {
   full_name: 'namn förnamn'
 });
 import {ActivityIndicator} from "react-native"
+=======
+import {ActivityIndicator} from "react-native";
+>>>>>>> Stashed changes
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -51,6 +55,7 @@ export default function App() {
         });
     }, []);
 
+<<<<<<< Updated upstream
   return (
       <NavigationContainer>{
         isSignedIn ? (
@@ -71,4 +76,30 @@ export default function App() {
       }
       </NavigationContainer>
   );
+=======
+    return (
+        <NavigationContainer>
+            {isSignedIn ?
+                (
+                    <Stack.Navigator initialRouteName="Main">
+                        <Stack.Screen name="Main" component={MainScreen} />
+                    </Stack.Navigator>
+                ) : (isSignedIn === null) ?
+                (
+                    <ActivityIndicator size="large" />
+                ) : (
+                    <Stack.Navigator initialRouteName="Sign-in">
+                      <Stack.Screen
+                          options={{headerShown: Platform.OS !== "web"}}
+                          name="Sign-in"
+                          component={SignInScreen}/>
+                      <Stack.Screen
+                          name="Sign-up"
+                          component={SignUpScreen} />
+                    </Stack.Navigator>
+                    )
+          }
+          </NavigationContainer>
+    );
+>>>>>>> Stashed changes
 }
