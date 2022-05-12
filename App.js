@@ -9,7 +9,7 @@ import { Platform } from 'react-native';
 import SignInScreen from "./src/screens/signInScreen";
 import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
-import forgotPasswordScreen from "./src/screens/forgotPasswordScreen";
+import ForgotPasswordScreen from "./src/screens/forgotPasswordScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {ActivityIndicator} from "react-native";
@@ -60,21 +60,21 @@ export default function App() {
                         <Stack.Screen name="VincentChatScreen" component={VincentChatScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
-                    (
-                        <ActivityIndicator size="large" />
-                    ) : (
-                        <Stack.Navigator initialRouteName="Sign-in">
-                            <Stack.Screen
-                                options={{headerShown: Platform.OS !== "web"}}
-                                name="Sign-in"
-                                component={SignInScreen}/>
-                            <Stack.Screen
-                                name="Sign-up"
-                                component={SignUpScreen} />
-                            <Stack.Screen
-                                name="Forgot password"
-                                component={forgotPasswordScreen} />
-                        </Stack.Navigator>
+                (
+                    <ActivityIndicator size="large" />
+                ) : (
+                    <Stack.Navigator initialRouteName="Sign-in">
+                      <Stack.Screen
+                          options={{headerShown: Platform.OS !== "web"}}
+                          name="Sign-in"
+                          component={SignInScreen}/>
+                      <Stack.Screen
+                          name="Sign-up"
+                          component={SignUpScreen} />
+                      <Stack.Screen
+                          name="Forgot password"
+                          component={ForgotPasswordScreen} />
+                    </Stack.Navigator>
                     )
             }
         </NavigationContainer>
