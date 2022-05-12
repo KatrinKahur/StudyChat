@@ -13,11 +13,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {ActivityIndicator} from "react-native";
 import ChatScreen from "./src/screens/chatScreen";
-import ContactListScreen from "./src/screens/contactListScreen";
-import AppModel from "./src/appModel";
 
 const Stack = createNativeStackNavigator();
-const appModel = new AppModel();
 export default function App() {
     const[isSignedIn, setIsSignedIn] = React.useState(null);
     React.useEffect(async () => {
@@ -36,10 +33,8 @@ export default function App() {
         onAuthStateChanged(getAuth(), function (user){
             if(user){
                 setIsSignedIn(true);
-                appModel.setUserId(user.uid);
             } else {
                 setIsSignedIn(false);
-                appModel.setUserId(null);
             }
         });
     }, []);
@@ -48,10 +43,8 @@ export default function App() {
         <NavigationContainer>
             {isSignedIn ?
                 (
-                    <Stack.Navigator initialRouteName="Main">
-                        <Stack.Screen name="Main" component={MainScreen} />
+                    <Stack.Navigator initialRouteName="Chat">
                         <Stack.Screen name="Chat" component={ChatScreen} />
-                        <Stack.Screen name="Contact list" component={ContactListScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
                 (
