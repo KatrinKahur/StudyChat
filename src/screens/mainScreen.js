@@ -1,9 +1,12 @@
+import { getAuth } from "firebase/auth";
 import AuthUser from "../external/authUser";
 import {AlertMessageComponent} from "../components/alertMessageComponent";
 import React, { useState } from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { Pressable, View, Text, StyleSheet } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { Platform } from "react-native-web";
+import { userInfo } from "os";
+
 //test
 //import {getDatabase, ref, set} from "firebase/database";
 
@@ -17,22 +20,31 @@ import { Platform } from "react-native-web";
 
 //writeUserData(34532, 'Oscar', 'oscar.maddison@hotmail.com', null)
 
-export default function MainScreen(){
+
+
+export default function MainScreen({navigation}){
+    React.useEffect(function(){
+        const username = getAuth().currentUser.displayName;
+        console.log("username: ", username);
+    }, [])
+
     return(<>
         <View>
-            <Text style ={styles.appName}>
+            <Text style = {styles.appName}>
                 StudyChat
             </Text>
-            <Button onClick = {() => {}/*NavigationContainer.navigate('profile')*/}/>
-            {/*Ska ocskå ha kod så att man blir utloggad*/}
-            <Button onClick = {() => {setAuthStatus(0)}}/>
-        </View>
 
-        {/*<FlatList>
-            Array Data = {};
-            mainScreen = getDatabase()
-            mainScreen.forEach(user; mainScreen)
-    </FlatList>*/}
+            <Pressable style = {styles.contactListButton} onPress = {() => {navigation.navigate("Contact list")}}>
+                <Text style ={styles.contactListText}>
+                    contact list
+                </Text>
+            </Pressable>
+            <Pressable style = {styles.contactListButton} onPress = {() => {AuthUser.signOut()}}>
+                <Text style ={styles.signOutText}>
+                    sign out
+                </Text>
+            </Pressable>
+        </View>
     </>)
     //Från katrin
     /*return(
@@ -56,25 +68,44 @@ const styles = StyleSheet.create({
     },
     signOutButton: {
         justifyContent: "center",
+        alignSelf: "center",
         display: "flex",
+        height: "50px",
         width: "33%",
         flexDirection: "row",
         backgroundColor: "white"
     },
     signOutText: {
+        fontSize: Platform.OS === 'web' ? 30 : 15,
         alignSelf: "center",
         display: "flex",
         width: "33%",
         flexDirection: "row",
     },
-    contactList: {
+    contactListButton: {
         justifyContent: "center",
         alignSelf: "center",
         display: "flex",
         width: "25%",
         height: 60,
-        flexDirection: "column",
+        flexDirection: "row",
     },
+    contactListText: {
+        fontSize: Platform.OS === 'web' ? 30 : 15,
+        alignSelf: "center",
+        display: "flex",
+        width: "33%",
+        flexDirection: "row",
+    },
+    userInfo: {
+        fontSize: Platform.OS === 'web' ? 50 : 30,
+        justifyContent: "center",
+        alignSelf: "center",
+        display: "flex",
+        width: "50%",
+        height: 30,
+        flexDirection: "row",
+    }
 })
 /*const [mainScreenList, setMainScreenList] = useState(props.userList);
 useEffect(() => {
