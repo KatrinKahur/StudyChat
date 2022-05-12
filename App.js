@@ -9,6 +9,7 @@ import { View, Platform, Text } from 'react-native';
 import SignInScreen from "./src/screens/signInScreen";
 import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
+import contactListScreen from "./src/screens/contactListScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -43,8 +44,8 @@ export default function App() {
       <NavigationContainer>{
         isSignedIn ? (
                 <Stack.Navigator initialRouteName="Main">
-                  <Stack.Screen name="Main"
-                                component={MainScreen} />
+                  <Stack.Screen name="Main" component={MainScreen} />
+                  <Stack.Screen name="contactListScreen" component={contactListScreen} />
                 </Stack.Navigator>
             ) :
             (isSignedIn === null)? (
