@@ -54,6 +54,12 @@ export default function SignInScreen( {navigation} ){
                     else
                         setAuthStatus(authStatus + 1)}}
                     testID="signInBtn"/>
+                <Text
+                    onPress={()=>{navigation.push("Forgot password")}}
+                    style={styles.forgotPasswordText}
+                >
+                    Forgot Password?
+                </Text>
                 <Text style={styles.noAccountYetText}>No account yet? </Text>
                 <AppButton
                     title="Click here to create one!"
@@ -93,5 +99,10 @@ const styles = StyleSheet.create({
         minWidth: Platform.OS === 'web'? 340 : 0,
         fontSize:  Platform.OS === 'web'? 25 : 18,
         marginTop: 30
+    },
+    forgotPasswordText: {
+        fontSize:  Platform.OS === 'web'? 18 : 12,
+        marginTop: 30,
+        textDecorationLine: 'underline'
     }
 })
