@@ -6,6 +6,7 @@ import {EmailInput} from "../components/emailInput";
 import {PasswordInput} from "../components/passwordInput";
 import {AlertMessageComponent} from "../components/alertMessageComponent";
 import {AppButton} from "../components/appButton";
+import { textDecorationColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 
 export default function SignInScreen( {navigation} ){
@@ -70,6 +71,7 @@ export default function SignInScreen( {navigation} ){
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
