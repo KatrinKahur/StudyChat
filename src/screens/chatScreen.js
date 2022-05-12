@@ -1,8 +1,7 @@
 import {Button, TextInput, View} from "react-native";
 import React from "react";
-import {getDatabase, push, ref} from "firebase/database";
 import moment from "moment";
-
+import { getDatabase, push, ref, set, onValue, child, get } from "firebase/database"
 
 function addMessageToDatabase(to, from, message){
     push(ref(getDatabase(), '/messages'), {
@@ -21,6 +20,30 @@ export default function ChatScreen(){
     const[userTo, setUserTo] = React.useState("Kalle")
     const[currentMessage, setCurrentMessage] = React.useState("");
     const[messageSentStatus, setMessageSentStatus] = React.useState(false);
+    const [users, setUsers] = React.useState({});
+
+    function addAllItems(data) {
+        setUsers(data);
+      }
+      const db = getDatabase();
+    
+      function GetAllDataOnce() {
+        const dbRef = ref(db);
+    
+    
+        get(child(dbRef, '/messages'))
+          .then((snapshot) => {
+            var students = [];
+    
+            snapshot.forEach(childSnapshot => {
+              students.push(childSnapshot.val());
+            });
+            addAllItems(students);
+          })
+    
+      }
+    
+    
 
     React.useEffect(() => {
         if(messageSentStatus){
@@ -37,6 +60,10 @@ export default function ChatScreen(){
                 onChangeText={(message) => setCurrentMessage(message)}
                 placeholder="Enter a message..."/>
             <Button title="Send message" onPress={() => {setMessageSentStatus(true)}}/>
+            <Button title="Get messages" onPress={() => {GetAllDataOnce();}}/>
+            
+            {console.log(users)}
         </View>
+    
     )
 }
