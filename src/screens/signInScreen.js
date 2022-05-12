@@ -55,6 +55,14 @@ export default function SignInScreen( {navigation} ){
                                setAuthStatus(authStatus + 1);
                         }} ><Text style={styles.buttonTitle}>Sign in</Text>
                     </Pressable>
+
+                    <Text 
+                        onPress={()=>{navigation.push("Forgot password")}}
+                        style={styles.forgotPasswordText}
+                    >
+                    Forgot Password?
+                    </Text>
+
                     <Text style={styles.noAccountYetText}>No account yet? </Text>
                     <Pressable
                         testID="signUpBtn" style={styles.button}

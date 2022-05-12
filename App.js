@@ -9,6 +9,7 @@ import { Platform } from 'react-native';
 import SignInScreen from "./src/screens/signInScreen";
 import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
+import forgotPasswordScreen from "./src/screens/forgotPasswordScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {ActivityIndicator} from "react-native";
@@ -65,6 +66,9 @@ export default function App() {
                       <Stack.Screen
                           name="Sign-up"
                           component={SignUpScreen} />
+                      <Stack.Screen
+                          name="Forgot password"
+                          component={forgotPasswordScreen} />
                     </Stack.Navigator>
                     )
           }
