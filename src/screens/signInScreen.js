@@ -5,6 +5,7 @@ import {StatusBar} from "expo-status-bar";
 import {EmailInput} from "../components/emailInput";
 import {PasswordInput} from "../components/passwordInput";
 import {AlertMessageComponent} from "../components/alertMessageComponent";
+import { textDecorationColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 
 export default function SignInScreen( {navigation} ){
@@ -102,6 +103,11 @@ const styles = StyleSheet.create({
     noAccountYetText: {
         fontSize:  Platform.OS === 'web'? 25 : 18,
         marginTop: 30
+    },
+    forgotPasswordText: {
+        fontSize:  Platform.OS === 'web'? 18 : 12,
+        marginTop: 30,
+        textDecorationLine: 'underline'
     },
     button: {
         backgroundColor: `#1e90ff`,
