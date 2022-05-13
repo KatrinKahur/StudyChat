@@ -1,7 +1,8 @@
 import {AlertMessageComponent} from "../../src/components/alertMessageComponent";
 import renderer from 'react-test-renderer';
-import {render, cleanup} from "@testing-library/react-native";
+import {render, cleanup, fireEvent} from "@testing-library/react-native";
 import { toHaveStyle, toHaveTextContent } from "@testing-library/jest-native";
+import { act } from 'react-dom/test-utils';
 import '@testing-library/jest-dom'
 
 beforeEach(() => {
@@ -66,7 +67,7 @@ describe('AlertMessageComponent', () => {
         expect(queryByTestId('message-container')).toBeNull();
     });
 
-    /*it('should become invisible when pressed on', async () => {
+    it('should become invisible when pressed on', async () => {
         await act(async () => {
             let testMessage = "Random message";
             const setTestMessage = (message) => {
@@ -78,10 +79,10 @@ describe('AlertMessageComponent', () => {
                 chosenStyle: style,
                 setMessageCallback: setTestMessage
             }
-            const { queryByTestId, getByText, findByText } = render(<AlertMessageComponent
+            const { queryByTestId } = render(<AlertMessageComponent
                 {...testProps} />);
             fireEvent.press(queryByTestId('message-container'));
-            expect(await queryByTestId('message-container')).toBeTruthy();
+            expect(testMessage).toBeNull();
         })
-    });*/
+    });
 })
