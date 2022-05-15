@@ -16,9 +16,9 @@ import ChatScreen from "./src/screens/chatScreen";
 import ContactListScreen from "./src/screens/contactListScreen";
 import AppModel from "./src/appModel";
 
-const Stack = createNativeStackNavigator();
-const appModel = new AppModel();
 export default function App() {
+    const Stack = createNativeStackNavigator();
+    const appModel = new AppModel();
     const[isSignedIn, setIsSignedIn] = React.useState(null);
     React.useEffect(async () => {
         try {
