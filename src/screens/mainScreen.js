@@ -1,11 +1,13 @@
 import { getAuth } from "firebase/auth";
 import AuthUser from "../external/authUser";
-import {AlertMessageComponent} from "../components/alertMessageComponent";
+//import {AlertMessageComponent} from "../components/alertMessageComponent";
 import React, { useState } from 'react';
-import { Pressable, View, Text, StyleSheet, NavigationBar } from 'react-native';
-import { NavigationContainer } from "@react-navigation/native";
+import { Pressable, View, Text, StyleSheet, ScrollView} from 'react-native';
+//expo install expo-navigation-bar;
+//import * as NavigationBar from "expo-navigation-bar";
+//import { NavigationContainer } from "@react-navigation/native";
 import { Platform } from "react-native-web";
-import { userInfo } from "os";
+//import { userInfo } from "os";
 //test
 import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 
@@ -35,8 +37,8 @@ export default function MainScreen({navigation}){
                 </Pressable>
             {//}else{
 }
-                <NavigationBar style = {styles.contactList}>
-                    function addAllItems(data) {
+                <ScrollView style = {styles.contactList}>
+                    {/*function addAllItems(data) {
                         setUsers(data);
                     }
                     const db = getDatabase();
@@ -57,8 +59,8 @@ export default function MainScreen({navigation}){
 
                     }
 
-  GetAllDataOnce();
-                </NavigationBar>
+                GetAllDataOnce();*/}
+                </ScrollView>
             {//}
 }
         </View>
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         display: "flex",
         width: "33%",
-        flexDirection: "row",
+        flexDirection: "row"
     },
     contactListButton: {
         justifyContent: "center",
@@ -105,14 +107,14 @@ const styles = StyleSheet.create({
         display: "flex",
         width: "25%",
         height: 60,
-        flexDirection: "row",
+        flexDirection: "row"
     },
     contactListText: {
         fontSize: Platform.OS === 'web' ? 30 : 15,
         alignSelf: "center",
         display: "flex",
         width: "33%",
-        flexDirection: "row",
+        flexDirection: "row"
     },
     userInfo: {
         fontSize: Platform.OS === 'web' ? 50 : 30,
@@ -121,10 +123,12 @@ const styles = StyleSheet.create({
         display: "flex",
         width: "50%",
         height: 30,
-        flexDirection: "row",
+        flexDirection: "row"
     },
-    contactList{
-        alignSelf: "left"
+    contactList: {
+        alignSelf: "left",
+        centerContent: true,
+        color: "green"
         //todo
     }
 })
