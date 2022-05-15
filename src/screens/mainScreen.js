@@ -2,25 +2,12 @@ import { getAuth } from "firebase/auth";
 import AuthUser from "../external/authUser";
 import {AlertMessageComponent} from "../components/alertMessageComponent";
 import React, { useState } from 'react';
-import { Pressable, View, Text, StyleSheet } from 'react-native';
+import { Pressable, View, Text, StyleSheet, NavigationBar } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { Platform } from "react-native-web";
 import { userInfo } from "os";
-
 //test
-//import {getDatabase, ref, set} from "firebase/database";
-
-/*function writeUserData(userId, name, email, imageUrl) {
-    set(ref(getDatabase(), 'users/' + userId), {
-        username: name,
-        email: email,
-        profile_picture : imageUrl
-    });
-  }*/
-
-//writeUserData(34532, 'Oscar', 'oscar.maddison@hotmail.com', null)
-
-
+import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 
 export default function MainScreen({navigation}){
     React.useEffect(function(){
@@ -39,11 +26,41 @@ export default function MainScreen({navigation}){
                     contact list
                 </Text>
             </Pressable>
-            <Pressable style = {styles.contactListButton} onPress = {() => {AuthUser.signOut()}}>
-                <Text style ={styles.signOutText}>
-                    sign out
-                </Text>
-            </Pressable>
+            {//if(Platform.OS === 'web'){
+}
+                <Pressable style = {styles.contactListButton} onPress = {() => {AuthUser.signOut()}}>
+                    <Text style ={styles.signOutText}>
+                        sign out
+                    </Text>
+                </Pressable>
+            {//}else{
+}
+                <NavigationBar style = {styles.contactList}>
+                    function addAllItems(data) {
+                        setUsers(data);
+                    }
+                    const db = getDatabase();
+
+                    function GetAllDataOnce() {
+                        const dbRef = ref(db);
+
+
+                        get(child(dbRef, '/users'))
+                        .then((snapshot) => {
+                            var students = [];
+
+                            snapshot.forEach(childSnapshot => {
+                                students.push(childSnapshot.val());
+                            });
+                            addAllItems(students);
+                        })
+
+                    }
+
+  GetAllDataOnce();
+                </NavigationBar>
+            {//}
+}
         </View>
     </>)
     //Från katrin
@@ -105,6 +122,10 @@ const styles = StyleSheet.create({
         width: "50%",
         height: 30,
         flexDirection: "row",
+    },
+    contactList{
+        alignSelf: "left"
+        //todo
     }
 })
 /*const [mainScreenList, setMainScreenList] = useState(props.userList);
