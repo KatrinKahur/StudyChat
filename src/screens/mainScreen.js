@@ -14,12 +14,36 @@ import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 export default function MainScreen({navigation}){
     React.useEffect(function(){
         const username = getAuth().currentUser.displayName;
+        console.log("username: ");
         console.log("username: ", username);
     }, [])
 
+    function addAllItems(data) {
+        setUsers(data);
+    }
+    const db = getDatabase();
+
+    function GetAllDataOnce() {
+        const dbRef = ref(db);
+
+
+        get(child(dbRef, '/users'))
+        .then((snapshot) => {
+            var students = [];
+
+            snapshot.forEach(childSnapshot => {
+                students.push(childSnapshot.val());
+            });
+            addAllItems(students);
+        })
+
+    }
+
+    //GetAllDataOnce();
+
     return(<>
-        <View>
-            <Text style = {styles.appName}>
+        <View style = {styles.view}>
+            <Text style = {styles.appNameText}>
                 StudyChat
             </Text>
 
@@ -30,7 +54,7 @@ export default function MainScreen({navigation}){
             </Pressable>
             {//if(Platform.OS === 'web'){
 }
-                <Pressable style = {styles.contactListButton} onPress = {() => {AuthUser.signOut()}}>
+                <Pressable style = {styles.signOutButton} onPress = {() => {AuthUser.signOut()}}>
                     <Text style ={styles.signOutText}>
                         sign out
                     </Text>
@@ -38,37 +62,12 @@ export default function MainScreen({navigation}){
             {//}else{
 }
                 <ScrollView style = {styles.contactList}>
-                    {/*function addAllItems(data) {
-                        setUsers(data);
-                    }
-                    const db = getDatabase();
-
-                    function GetAllDataOnce() {
-                        const dbRef = ref(db);
-
-
-                        get(child(dbRef, '/users'))
-                        .then((snapshot) => {
-                            var students = [];
-
-                            snapshot.forEach(childSnapshot => {
-                                students.push(childSnapshot.val());
-                            });
-                            addAllItems(students);
-                        })
-
-                    }
-
-                GetAllDataOnce();*/}
+                    testintestingtesting
                 </ScrollView>
             {//}
 }
         </View>
     </>)
-    //Från katrin
-    /*return(
-        <View style={{selfAlign: "center", marginHorizontal: "45%", marginVertical: "25%"}}><Button title="Logout" onPress={()=>AuthUser.signOut()}/></View>
-    )*/
 }
 
 const styles = StyleSheet.create({
@@ -92,7 +91,8 @@ const styles = StyleSheet.create({
         height: "50px",
         width: "33%",
         flexDirection: "row",
-        backgroundColor: "white"
+        backgroundColor: "grey",
+        margin: 5
     },
     signOutText: {
         fontSize: Platform.OS === 'web' ? 30 : 15,
@@ -105,9 +105,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         display: "flex",
-        width: "25%",
+        width: "30%",
         height: 60,
-        flexDirection: "row"
+        flexDirection: "row",
+        backgroundColor: "brown",
+        margin: 5
     },
     contactListText: {
         fontSize: Platform.OS === 'web' ? 30 : 15,
@@ -130,23 +132,8 @@ const styles = StyleSheet.create({
         centerContent: true,
         color: "green"
         //todo
+    },
+    view: {
+        height: 200
     }
 })
-/*const [mainScreenList, setMainScreenList] = useState(props.userList);
-useEffect(() => {
-    function createMainScreenList(mainScreen) {
-        setMainScreenList(props.userList);
-    }
-})
-
-props.userList.on('child_added', (newUser));{
-    mainScreenList.push(newUser);
-}
-
-props.userList.on('child_removed', (deletedUser));{
-    mainScreenList.removeChild(deletedUser);
-}
-
-props.userList.on('child_changed');{
-    setMainScreenList(props.userList);
-}*/
