@@ -26,7 +26,7 @@ jobs:
           expo-version: 44.0.0
 
       - name: Install dependencies
-      - run: npm install --legacy-peer-deps
+        run: npm install --legacy-peer-deps
 
       - name: Run tests
-      - run: npm test
+        run: npm test
