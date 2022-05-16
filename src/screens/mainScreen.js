@@ -62,7 +62,24 @@ export default function MainScreen({navigation}){
             {//}else{
 }
                 <ScrollView style = {styles.contactList}>
-                    testintestingtesting
+                    <Text>
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                        testintestingtesting
+                    </Text>
                 </ScrollView>
             {//}
 }
@@ -130,7 +147,8 @@ const styles = StyleSheet.create({
     contactList: {
         alignSelf: "left",
         centerContent: true,
-        color: "green"
+        color: "green",
+        marginHorizontal: "15"
         //todo
     },
     view: {
