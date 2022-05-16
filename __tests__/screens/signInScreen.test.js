@@ -4,27 +4,6 @@ import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import '@testing-library/jest-native/extend-expect';
 import renderer from "react-test-renderer";
 
-jest.mock('firebase/auth', () => {
-    return {
-        getAuth: jest.fn(),
-        signInWithEmailAndPassword: jest.fn((auth, email, password) => {
-            return new Promise((doResolve, doReject) => {
-                if((email === global.FAKE_EMAIL) && (password === global.FAKE_PASSWORD)){
-                    doResolve(true);
-                } else {
-                    if(email.indexOf("@") === -1) {
-                        doReject({message: "Firebase: Error (auth/invalid-email)."})
-                    } else if(email !== global.FAKE_EMAIL) {
-                        doReject({message: "Firebase: Error (auth/user-not-found)."})
-                    } else {
-                        doReject({message: "Firebase: Error (auth/wrong-password)."})
-                    }
-                }
-            })
-        })
-    }
-})
-
 beforeAll(() => {
     global.FAKE_EMAIL = "jest@studychat.dev"
     global.FAKE_PASSWORD = "FakePassword"

@@ -3,49 +3,6 @@ import {fireEvent, render, cleanup, waitFor} from "@testing-library/react-native
 import {initializeApp} from "firebase/app";
 import {getAuth, initializeAuth, onAuthStateChanged, signOut} from "firebase/auth";
 
-jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
-jest.mock('firebase/app', () => {
-    return {
-        initializeApp: jest.fn((config) => {})
-    }
-});
-jest.mock("@react-native-async-storage/async-storage", () => {
-    return {
-        AsyncStorage: {}
-    }
-});
-jest.mock("firebase/auth/react-native", () => {
-    return {
-        getReactNativePersistence: jest.fn((arg) => {
-        })
-    }
-})
-jest.mock('firebase/auth', () => {
-    return {
-        getAuth: jest.fn(),
-        initializeAuth: jest.fn((app, persistence) => {}),
-        onAuthStateChanged: jest.fn((auth, cb) => {
-            cb(global.user);
-        }),
-        signOut: jest.fn((auth) => {
-            return new Promise((doResolve) => {
-                global.user = null;
-                doResolve(true);
-            })
-        })
-    }
-})
-jest.mock('firebase/database', () => {
-    return {
-        getDatabase: jest.fn(),
-        ref: jest.fn(),
-        set: jest.fn(),
-        push: jest.fn(),
-        child: jest.fn(),
-        get: jest.fn()
-    }
-})
-
 beforeEach(() => {
     global.user = null;
 })
