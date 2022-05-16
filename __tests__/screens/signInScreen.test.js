@@ -2,6 +2,7 @@ import SignInScreen from "../../src/screens/signInScreen";
 import {fireEvent, render} from "@testing-library/react-native";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import '@testing-library/jest-native/extend-expect';
+import renderer from "react-test-renderer";
 
 jest.mock('firebase/auth', () => {
     return {
@@ -30,6 +31,13 @@ beforeAll(() => {
 });
 
 describe('test that error messages are printed', () => {
+    it('test that SignInScreen renders correctly', () => {
+        const { toJSON } = renderer.create(
+            <SignInScreen />
+        );
+        expect(toJSON()).toMatchSnapshot();
+    });
+
     it('not filling in the password will print an error message', () => {
         const { getByPlaceholderText, getByText, queryByTestId } = render(
             <SignInScreen />
