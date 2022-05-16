@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AlertMessageComponent should render correctly 1`] = `
+<View
+  accessible={true}
+  collapsable={false}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "backgroundColor": "#f2dede",
+      "borderColor": "#ebccd1",
+      "borderRadius": 5,
+      "borderWidth": 1,
+      "paddingLeft": 20,
+      "paddingRight": 10,
+      "paddingVertical": 20,
+      "position": "absolute",
+      "top": 10,
+      "zIndex": 9999,
+    }
+  }
+  testID="message-container"
+>
+  <Text
+    style={
+      Object {
+        "color": "#a94442",
+        "fontSize": 20,
+      }
+    }
+  >
+    Random message
+    <Text />
+  </Text>
+</View>
+`;
