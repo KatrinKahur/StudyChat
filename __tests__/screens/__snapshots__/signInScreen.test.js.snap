@@ -112,95 +112,92 @@ exports[`test that error messages are printed test that SignInScreen renders cor
       </View>
     </View>
     <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
       style={
         Object {
+          "alignItems": "center",
+          "backgroundColor": "#1e90ff",
+          "borderRadius": 5,
+          "marginBottom": 15,
+          "marginTop": 10,
+          "minWidth": 0,
+          "paddingVertical": 17,
+          "width": "55%",
+        }
+      }
+      testID="signInBtn"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#ffffff",
+            "fontSize": 15,
+          }
+        }
+      >
+        Sign in
+      </Text>
+    </View>
+    <Text
+      style={
+        Object {
+          "fontSize": 18,
+          "marginTop": 30,
           "minWidth": 0,
           "width": "55%",
         }
       }
     >
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#1e90ff",
-            "borderRadius": 5,
-            "marginBottom": 15,
-            "marginTop": 10,
-            "paddingVertical": 17,
-          }
+      No account yet? 
+    </Text>
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#1e90ff",
+          "borderRadius": 5,
+          "marginBottom": 15,
+          "marginTop": 10,
+          "minWidth": 0,
+          "paddingVertical": 17,
+          "width": "55%",
         }
-        testID="signInBtn"
-      >
-        <Text
-          style={
-            Object {
-              "color": "#ffffff",
-              "fontSize": 15,
-            }
-          }
-        >
-          Sign in
-        </Text>
-      </View>
+      }
+      testID="signUpBtn"
+    >
       <Text
         style={
           Object {
-            "fontSize": 18,
-            "marginTop": 30,
+            "color": "#ffffff",
+            "fontSize": 15,
           }
         }
       >
-        No account yet? 
+        Click here to create one!
       </Text>
-      <View
-        accessible={true}
-        collapsable={false}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#1e90ff",
-            "borderRadius": 5,
-            "marginBottom": 15,
-            "marginTop": 10,
-            "paddingVertical": 17,
-          }
-        }
-        testID="signUpBtn"
-      >
-        <Text
-          style={
-            Object {
-              "color": "#ffffff",
-              "fontSize": 15,
-            }
-          }
-        >
-          Click here to create one!
-        </Text>
-      </View>
     </View>
   </View>
 </View>
