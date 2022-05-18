@@ -1,16 +1,11 @@
 import { getAuth } from "firebase/auth";
 import AuthUser from "../external/authUser";
-//import {AlertMessageComponent} from "../components/alertMessageComponent";
 import React, { useState } from 'react';
 import { Pressable, View, Text, StyleSheet, ScrollView} from 'react-native';
-//expo install expo-navigation-bar;
-//import * as NavigationBar from "expo-navigation-bar";
-//import { NavigationContainer } from "@react-navigation/native";
 import { Platform } from "react-native-web";
-//import { userInfo } from "os";
 //test
 import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
-import { users, setUsers } from "./chatScreen";
+//import { users, setUsers } from "./chatScreen";
 
 export default function MainScreen({navigation}){
     React.useEffect(function(){
@@ -19,11 +14,11 @@ export default function MainScreen({navigation}){
         console.log("username: ", username);
     }, [])
 
-/*   function addAllItems(data) {
+   function addAllItems(data) {
         setUsers(data);
-    }*/
+    }
     
-//    function GetAllDataOnce() {
+    function GetAllDataOnce() {
         const db = getDatabase();
         
         const dbRef = ref(db);
@@ -35,13 +30,12 @@ export default function MainScreen({navigation}){
             snapshot.forEach(childSnapshot => {
                 students.push(childSnapshot.val());
             });
-            //addAllItems(students);
-            setUsers(students);
+            addAllItems(students);
         })
- //       return students;
-//    }
+        return students;
+    }
 
-//    var students = GetAllDataOnce();
+    const students = GetAllDataOnce();
 
     return(<>
         <View style = {styles.view}>
@@ -69,7 +63,7 @@ export default function MainScreen({navigation}){
 }
                 <ScrollView style = {styles.contactList}>
                     <Text>
-                        {users.map().displayName}
+                        {students.map().displayName}
                         testingtestingtesting
                         testingtestingtesting
                         testingtestingtesting
