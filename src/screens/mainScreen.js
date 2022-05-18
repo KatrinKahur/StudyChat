@@ -10,6 +10,7 @@ import { Platform } from "react-native-web";
 //import { userInfo } from "os";
 //test
 import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
+import { users, setUsers } from "./chatScreen";
 
 export default function MainScreen({navigation}){
     React.useEffect(function(){
@@ -48,6 +49,10 @@ export default function MainScreen({navigation}){
                 StudyChat
             </Text>
 
+            <Text style = {styles.userInfo}>
+                {getAuth().currentUser.displayName}
+            </Text>
+
             <Pressable style = {styles.contactListButton} onPress = {() => {navigation.navigate("Contact list")}}>
                 <Text style ={styles.contactListText}>
                     contact list
@@ -64,7 +69,7 @@ export default function MainScreen({navigation}){
 }
                 <ScrollView style = {styles.contactList}>
                     <Text>
-                        {/*students.displayName*/}
+                        {users.map().displayName}
                         testingtestingtesting
                         testingtestingtesting
                         testingtestingtesting
