@@ -12,7 +12,7 @@ import MainScreen from "./src/screens/mainScreen";
 import contactListScreen from "./src/screens/contactListScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import ChatScreen from "./src/screens/chatScreen";
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -46,6 +46,7 @@ export default function App() {
                 <Stack.Navigator initialRouteName="Main">
                   <Stack.Screen name="Main" component={MainScreen} />
                   <Stack.Screen name="contactListScreen" component={contactListScreen} />
+                  <Stack.Screen name="chatScreen" component={ChatScreen} />
                 </Stack.Navigator>
             ) :
             (isSignedIn === null)? (
