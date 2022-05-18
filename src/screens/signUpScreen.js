@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform} from 'react-native';
 import { TextInput } from 'react-native';
-import {getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import {getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import {FontAwesome, FontAwesome5} from '@expo/vector-icons';
 
 export default class Signup extends Component {
@@ -30,7 +30,7 @@ export default class Signup extends Component {
       
       createUserWithEmailAndPassword(getAuth(),this.state.email, this.state.password)
       .then((res) => {
-        res.user.updateProfile({
+        updateProfile(res.user,{
           displayName: this.state.displayName
         })
         console.log('User registered successfully!')

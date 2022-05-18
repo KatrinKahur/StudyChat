@@ -1,10 +1,11 @@
 import React, {useState} from "react";
 import AuthUser from "../external/authUser";
-import {Pressable, Platform, StyleSheet, Text, View} from "react-native";
+import {Platform, StyleSheet, Text, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
 import {EmailInput} from "../components/emailInput";
 import {PasswordInput} from "../components/passwordInput";
 import {AlertMessageComponent} from "../components/alertMessageComponent";
+import {AppButton} from "../components/appButton";
 
 
 export default function SignInScreen( {navigation} ){
@@ -41,27 +42,23 @@ export default function SignInScreen( {navigation} ){
                     <EmailInput onChangeText={(e) => setEmail(e)} value={email}/>
                     <PasswordInput onChangeText={(e) => setPassword(e)} value={password} />
                 </View>
-                <View style={styles.buttonContainer}>
-                    <Pressable
-                        testID="signInBtn" style={styles.button}
-                        onPress={()=>{
-                            if((email === "") && (password === ""))
-                                setErrorMessageState("Please fill in the credentials");
-                            else if(email === "")
-                                setErrorMessageState("An email is required");
-                            else if(password === "")
-                                setErrorMessageState("A password is required");
-                            else
-                               setAuthStatus(authStatus + 1);
-                        }} ><Text style={styles.buttonTitle}>Sign in</Text>
-                    </Pressable>
-                    <Text style={styles.noAccountYetText}>No account yet? </Text>
-                    <Pressable
-                        testID="signUpBtn" style={styles.button}
-                        onPress={()=>{navigation.push("Sign-up")}}>
-                        <Text style={styles.buttonTitle}>Click here to create one!</Text>
-                    </Pressable>
-                </View>
+                <AppButton
+                    title="Sign in"
+                    onPress={()=>{
+                    if((email === "") && (password === ""))
+                        setErrorMessageState("Please fill in the credentials");
+                    else if(email === "")
+                        setErrorMessageState("An email is required");
+                    else if(password === "")
+                        setErrorMessageState("A password is required");
+                    else
+                        setAuthStatus(authStatus + 1)}}
+                    testID="signInBtn"/>
+                <Text style={styles.noAccountYetText}>No account yet? </Text>
+                <AppButton
+                    title="Click here to create one!"
+                    onPress={()=>{navigation.push("Sign-up")}}
+                    testID="signUpBtn"/>
             </View>
             <StatusBar style="auto"/>
         </View>
@@ -81,37 +78,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         flex: 1
     },
+    signInInputContainer: {
+        width: Platform.OS === 'web'? "15%":"55%",
+        minWidth: Platform.OS === 'web'? 340 : 0,
+    },
     welcomeText: {
         fontSize: Platform.OS === 'web' ? 65 : 40,
         marginBottom: Platform.OS === 'web' ? 50 : 35,
         fontWeight: "bold",
         textAlign: "center"
     },
-    signInInputContainer: {
+    noAccountYetText: {
         width: Platform.OS === 'web'? "15%":"55%",
         minWidth: Platform.OS === 'web'? 340 : 0,
-    },
-    noAccountYetText: {
         fontSize:  Platform.OS === 'web'? 25 : 18,
         marginTop: 30
-    },
-    button: {
-        backgroundColor: `#1e90ff`,
-        paddingVertical: 17,
-        marginTop: 10,
-        marginBottom: 15,
-        alignItems: "center",
-        borderRadius: 5
-    },
-    buttonTitle: {
-        fontSize:  Platform.OS === 'web'? 20 : 15,
-        color: `#ffffff`
-    },
-    buttonContainer: {
-        width: Platform.OS === 'web'? "15%" : "55%",
-        minWidth: Platform.OS === 'web'? 340 : 0
-    },
-    text: {
-        alignSelf: "center"
     }
 })

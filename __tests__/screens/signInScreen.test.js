@@ -2,35 +2,40 @@ import SignInScreen from "../../src/screens/signInScreen";
 import {fireEvent, render} from "@testing-library/react-native";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import '@testing-library/jest-native/extend-expect';
-
-jest.mock('firebase/auth', () => {
-    return {
-        getAuth: jest.fn(),
-        signInWithEmailAndPassword: jest.fn((auth, email, password) => {
-            return new Promise((doResolve, doReject) => {
-                if((email === global.FAKE_EMAIL) && (password === global.FAKE_PASSWORD)){
-                    doResolve(true);
-                } else {
-                    if(email.indexOf("@") === -1) {
-                        doReject({message: "Firebase: Error (auth/invalid-email)."})
-                    } else if(email !== global.FAKE_EMAIL) {
-                        doReject({message: "Firebase: Error (auth/user-not-found)."})
-                    } else {
-                        doReject({message: "Firebase: Error (auth/wrong-password)."})
-                    }
-                }
-            })
-        })
-    }
-})
+import renderer from "react-test-renderer";
 
 beforeAll(() => {
     global.FAKE_EMAIL = "jest@studychat.dev"
     global.FAKE_PASSWORD = "FakePassword"
 });
 
-describe('test that error messages are printed', () => {
-    it('not filling in the password will print an error message', () => {
+describe('SignInScreen', () => {
+    it('should render correctly', () => {
+        const { toJSON } = renderer.create(
+            <SignInScreen />
+        );
+        expect(toJSON()).toMatchSnapshot();
+    });
+
+    it('sign in the user when entering credentials of an existing user account', () => {
+        const { getByPlaceholderText, getByText } = render(
+            <SignInScreen />
+        );
+
+        fireEvent.changeText(
+            getByPlaceholderText("Email.."),
+            global.FAKE_EMAIL
+        );
+        fireEvent.changeText(
+            getByPlaceholderText("Password.."),
+            global.FAKE_PASSWORD
+        );
+        fireEvent.press(getByText("Sign in"));
+        expect(signInWithEmailAndPassword).toHaveBeenCalled();
+
+    });
+
+    it('should print an error message when password field is empty', () => {
         const { getByPlaceholderText, getByText, queryByTestId } = render(
             <SignInScreen />
         );
@@ -43,7 +48,7 @@ describe('test that error messages are printed', () => {
         expect(queryByTestId('message-container')).toHaveTextContent('A password is required');
     });
 
-    it('not filling in the email field will print an error message', () => {
+    it('should print an error message when email field is empty', () => {
         const { getByPlaceholderText, getByText, queryByTestId } = render(
             <SignInScreen />
         );
@@ -55,7 +60,7 @@ describe('test that error messages are printed', () => {
         expect(queryByTestId('message-container')).toHaveTextContent("An email is required");
     });
 
-    it('not filling in the credentials will print an error message', () => {
+    it('should print an error message if both fields are empty', () => {
         const { getByText, queryByTestId } = render(
             <SignInScreen />
         );
@@ -64,7 +69,7 @@ describe('test that error messages are printed', () => {
     });
 
 
-    it('not existing user credentials will print an error message', async () => {
+    it('should print an error message if the user does not exist', async () => {
         const email = "some_email@email.dev";
         const password = "SomePassword";
         const { getByPlaceholderText, getByText, queryByTestId, findByText } = render(
@@ -85,7 +90,7 @@ describe('test that error messages are printed', () => {
 
     });
 
-    it('wrong password will print an error message', async () => {
+    it('should print an error message if password is incorrect', async () => {
         const { getByPlaceholderText, getByText, queryByTestId, findByText } = render(
             <SignInScreen />
         );
@@ -102,36 +107,20 @@ describe('test that error messages are printed', () => {
         expect(signInWithEmailAndPassword).toHaveBeenCalledWith(getAuth(), global.FAKE_EMAIL, password);
         await findByText("Invalid password");
         expect(queryByTestId('message-container')).toHaveTextContent("Invalid password");
-    })
-})
+    });
 
-test('pushing the signup button redirects the user to main screen', () => {
-    const navigationProps = {
-        navigation: {
-            push: jest.fn()
+    it('should redirect to SignUpScreen when clicking the "create new account"-button', () => {
+        const navigationProps = {
+            navigation: {
+                push: jest.fn()
+            }
         }
-    }
-    const { getByText } = render(
-        <SignInScreen {...navigationProps}/>
-    );
-    fireEvent.press(getByText("Click here to create one!"));
-    expect(navigationProps.navigation.push).toHaveBeenCalledWith("Sign-up");
-})
+        const { getByText } = render(
+            <SignInScreen {...navigationProps}/>
+        );
+        fireEvent.press(getByText("Click here to create one!"));
+        expect(navigationProps.navigation.push).toHaveBeenCalledWith("Sign-up");
+    });
+});
 
-test('successful sign in', () => {
-    const { getByPlaceholderText, getByText } = render(
-        <SignInScreen />
-    );
 
-    fireEvent.changeText(
-        getByPlaceholderText("Email.."),
-        global.FAKE_EMAIL
-    );
-    fireEvent.changeText(
-        getByPlaceholderText("Password.."),
-        global.FAKE_PASSWORD
-    );
-    fireEvent.press(getByText("Sign in"));
-    expect(signInWithEmailAndPassword).toHaveBeenCalled();
-
-})

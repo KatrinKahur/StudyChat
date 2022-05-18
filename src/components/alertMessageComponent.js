@@ -3,7 +3,7 @@ import {Feather} from "@expo/vector-icons";
 
 export const AlertMessageComponent = ({message, chosenStyle = "info", setMessageCallback}) => {
     if(message === null){
-        return (<></>)
+        return null
     }
 
     if(chosenStyle !== "danger" && chosenStyle !== "success")

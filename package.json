@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "jest",
+    "test:ci": "jest -i screens/signInScreen.test.js components/alertMessageComponent.test.js components/appButton.test.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
@@ -31,8 +32,9 @@
     "@babel/core": "^7.12.9",
     "@expo/vector-icons": "^13.0.0",
     "@react-navigation/native": "^6.0.10",
+    "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react-native": "^9.1.0",
-    "cypress": "^9.6.0",
+    "cypress": "^9.6.1",
     "react-test-renderer": "^17.0.1"
   },
   "private": true,
@@ -41,6 +43,8 @@
     "transformIgnorePatterns": [
       "node_modules/(?!((jest-)?react-native|@react-native(-community)?)|expo(nent)?|@expo(nent)?/.*|@expo-google-fonts/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|react-native-svg)"
     ],
+    "testPathIgnorePatterns": ["<rootDir>/cypress/"],
+    "setupFilesAfterEnv": ["./__mocks__/mockFirebase.js"],
     "globals": {
       "__DEV__": true,
       "__RCTProfileIsProfiling": false
