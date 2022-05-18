@@ -37,6 +37,7 @@ export default function ChatScreen(){
         console.warn(error);
       }
     } /// add facebook fresco
+    
     const styles = StyleSheet.create({
         view: {
           flex: 1,
@@ -61,26 +62,7 @@ export default function ChatScreen(){
       fetchGifs();
     }
   
-    return (
-      <View style={styles.view}>
-        <TextInput
-          placeholder="Search Giphy"
-          placeholderTextColor='#fff'
-          style={styles.textInput}
-          onChangeText={(text) => onEdit(text)}
-        />
-        <FlatList
-          data={gifs}
-          renderItem={({item}) => (
-            <Image
-              resizeMode='contain'
-              style={styles.image}
-              source={{uri: item.images.original.url}}
-            />
-          )}
-        />
-      </View>
-    );
+
     function addAllItems(data) {
         setUsers(data);
       }
@@ -106,6 +88,7 @@ export default function ChatScreen(){
     React.useEffect(() => {
         if(messageSentStatus){
             addMessageToDatabase(userTo, userFrom, currentMessage)
+            fetchGifs();
             setMessageSentStatus(false);
             setCurrentMessage("");
         }
@@ -120,6 +103,7 @@ export default function ChatScreen(){
                 placeholder="Enter a message..." placeholderTextColor={'#F5FFFA'} style ={{height:40, borderRadius:20, backgroundColor: '#ccc'}}/>
             <Button title="Send message" onPress={() => {setMessageSentStatus(true)}}/>
             <Button title="Get messages" onPress={() => {GetAllDataOnce();}}/>
+            <Button title="Get GIPHY" onPress={() => {fetchGifs();}}/>
             
             {console.log(users)}
         </View>
