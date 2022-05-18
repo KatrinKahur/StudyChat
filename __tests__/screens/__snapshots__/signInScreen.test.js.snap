@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`test that error messages are printed test that SignInScreen renders correctly 1`] = `
+exports[`SignInScreen should render correctly 1`] = `
 <View
   style={
     Object {
