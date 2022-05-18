@@ -37,11 +37,10 @@ export default function MainScreen({navigation}){
             //addAllItems(students);
             setUsers(students);
         })
-        return students;
-    
+ //       return students;
 //    }
 
-    var students = GetAllDataOnce();
+//    var students = GetAllDataOnce();
 
     return(<>
         <View style = {styles.view}>
@@ -65,7 +64,13 @@ export default function MainScreen({navigation}){
 }
                 <ScrollView style = {styles.contactList}>
                     <Text>
-                        {students.displayName}
+                        {/*students.displayName*/}
+                        testingtestingtesting
+                        testingtestingtesting
+                        testingtestingtesting
+                        testingtestingtesting
+                        testingtestingtesting
+                        testingtestingtesting
                     </Text>;
                 </ScrollView>
             {//}
