@@ -14,6 +14,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {ActivityIndicator} from "react-native";
 import ChatScreen from "./src/screens/chatScreen";
 import ContactListScreen from "./src/screens/contactListScreen";
+import VincentChatScreen from "./src/screens/vincentChatScreen";
+import VincentContactListScreen from "./src/screens/VincentContactListScreen";
 import AppModel from "./src/appModel";
 
 export default function App() {
