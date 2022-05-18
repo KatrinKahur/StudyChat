@@ -43,7 +43,8 @@ export default function App() {
         <NavigationContainer>
             {isSignedIn ?
                 (
-                    <Stack.Navigator initialRouteName="Chat">
+                    <Stack.Navigator initialRouteName="Main">
+                        <Stack.Screen name="Main" component={MainScreen} />
                         <Stack.Screen name="Chat" component={ChatScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
