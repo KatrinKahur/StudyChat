@@ -52,6 +52,8 @@ export default function App() {
                         <Stack.Screen name="Main" component={MainScreen} />
                         <Stack.Screen name="Chat" component={ChatScreen} />
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
+                        <Stack.Screen name="VincentContactListScreen" component={VincentContactListScreen} />
+                        <Stack.Screen name="VincentChatScreen" component={VincentChatScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
                     (

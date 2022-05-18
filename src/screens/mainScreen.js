@@ -9,8 +9,16 @@ export default function MainScreen({navigation}){
                     console.log("Error at sign out: ", error.message);
                 })
             }}/>
+
+
+
+            
             <Button title="Go to ChatScreen" onPress={() => {navigation.push("Chat")}}/>
             <Button title="Go to ContactListScreen" onPress={() => {navigation.push("Contact list")}}/>
+
+
+
+
         </View>
     )
 }
