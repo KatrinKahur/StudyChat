@@ -68,16 +68,9 @@ export default function ChatScreen({ navigation, route }) {
 
     useEffect(() => {
 
-
-
-
-
         GetAllDataOnce();
-
         const db = getDatabase();
-
         const updatedRef = ref(db, 'messages/');
-
         onChildAdded(updatedRef, (data) => {
             console.log("UPDATED VALUE FOUND")
             GetAllDataOnce();

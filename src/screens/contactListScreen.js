@@ -9,19 +9,15 @@ import { firebaseConfig } from "../config/firebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getReactNativePersistence } from "firebase/auth/react-native";
 import React, { useState, useEffect } from "react";
-import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
+import { getDatabase, ref, set, onValue, child, get, onChildAdded } from "firebase/database";
 import ChatScreen from "./chatScreen";
 // Import Admin SDK
 export default function ContactListScreen({ navigation }) {
-
-
-  let a = 1010;
 
   function getUser(){
     const auth = getAuth();
     const userdata = auth.currentUser;
    return userdata
-
   }
 
 
@@ -29,6 +25,15 @@ export default function ContactListScreen({ navigation }) {
     let userdata = getUser()
     setuserData(userdata)
     GetAllDataOnce();
+
+    const db = getDatabase();
+    const updatedRef = ref(db, 'users/');
+    onChildAdded(updatedRef, (data) => {
+        console.log("UPDATED VALUE FOUND")
+        GetAllDataOnce();
+    });
+
+
   }, []);
 
   
