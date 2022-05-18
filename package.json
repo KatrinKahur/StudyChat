@@ -9,7 +9,7 @@
     "web": "expo start --web",
     "eject": "expo eject",
     "test": "jest",
-    "test:ci": "jest -i screens/signInScreen.test.js components/alertMessageComponent.test.js"
+    "test:ci": "jest -i screens/signInScreen.test.js components/alertMessageComponent.test.js components/appButton.test.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "~1.15.0",
