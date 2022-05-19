@@ -92,7 +92,6 @@ export default function MainScreen({navigation}){
 
 const styles = StyleSheet.create({
     view: {
-        alignText: "center",
         justifyContent: "center",
         display: "flex",
         width: "100%",
@@ -108,8 +107,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         display: "flex",
-        height: "40px",
-        width: "20%",
+        height: Platform.OS === 'web' ? 60 : 35,
+        width: Platform.OS === 'web' ? "15%" : "30%",
         flexDirection: "row",
         backgroundColor: "grey",
         margin: 5
@@ -118,15 +117,15 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'web' ? 30 : 15,
         alignSelf: "center",
         display: "flex",
-        width: "33%",
+        width: Platform.OS === 'web'? 140 : 60,
         flexDirection: "row"
     },
     contactListButton: {
         justifyContent: "center",
         alignSelf: "center",
         display: "flex",
-        width: "30%",
-        height: 60,
+        width: Platform.OS === 'web' ? "20%" : "40%",
+        height: Platform.OS === 'web' ? 60 : 35,
         flexDirection: "row",
         backgroundColor: "brown",
         margin: 5,
@@ -136,15 +135,16 @@ const styles = StyleSheet.create({
         fontSize: Platform.OS === 'web' ? 30 : 15,
         alignSelf: "center",
         display: "flex",
-        width: "33%",
+        //width: "33%",
         flexDirection: "row"
     },
     userInfo: {
+        textAlign: "center",
         fontSize: Platform.OS === 'web' ? 35 : 20,
-        justifyContent: "center",
+        //justifyContent: "center",
         alignSelf: "center",
         display: "flex",
-        width: "50%",
+        //width: "50%",
         height: 30,
         flexDirection: "row",
         marginBottom: 10,
@@ -156,8 +156,5 @@ const styles = StyleSheet.create({
         color: "green",
         marginHorizontal: "15"
         //todo
-    },
-    view: {
-        height: 200,
     }
 })
