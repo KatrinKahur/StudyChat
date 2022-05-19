@@ -8,18 +8,19 @@ import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 import VincentChatScreen from "./vincentChatScreen";
 import VincentContactListScreen from "./vincentContactListScreen.js";
 
-export default function MainScreen({navigation, model}){
-    const [userName, setUserName] = React.useState(model.userName)
+export default function MainScreen(props){
+    const [userName, setUserName] = React.useState(props.model.userName)
     
     function waitForSetUserName(){
-        if(model.userName === null){
+        if(props.model.userName === null){
             setTimeout(() => {waitForSetUserName()}, 500);
         }else{
-            setUserName(model.userName);
+            setUserName(props.model.userName);
         }
     }
 
-    React.useEffect(() => {waitForSetUserName()}, [model.userName])
+    React.useEffect(() => {
+        waitForSetUserName()}, [props.model.userName])
 
 /*   function addAllItems(data) {
         setUsers(data);
@@ -58,12 +59,12 @@ export default function MainScreen({navigation, model}){
                 {console.log(userName)}
             </Text>
 
-            <Pressable style = {styles.contactListButton} onPress = {() => {navigation.push("Chat")}}>
+            <Pressable style = {styles.contactListButton} onPress = {() => {props.navigation.push("Chat")}}>
                 <Text style ={styles.contactListText}>
                     chat screen
                 </Text>
             </Pressable>
-            <Pressable style = {styles.contactListButton} onPress = {() => {navigation.push("VincentContactList")}}>
+            <Pressable style = {styles.contactListButton} onPress = {() => {props.navigation.push("VincentContactList")}}>
                 <Text style ={styles.contactListText}>
                     contact list
                 </Text>

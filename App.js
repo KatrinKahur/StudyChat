@@ -56,7 +56,12 @@ export default function App() {
             {isSignedIn ?
                 (
                     <Stack.Navigator initialRouteName="Main">
-                        <Stack.Screen name="Main" children = {() => (<MainScreen model = {appModel}/>)} />
+                        <Stack.Screen
+                            name="Main"
+                            children = {(props) => (<MainScreen
+                                navigation = {props.navigation}
+                                model = {appModel} />)}
+                        />
                         <Stack.Screen name="Chat" component={ChatScreen} />
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
                         <Stack.Screen name="VincentContactList" component={VincentContactListScreen} />
@@ -73,7 +78,10 @@ export default function App() {
                           component={SignInScreen}/>
                       <Stack.Screen
                           name="Sign-up"
-                          children = {() => (<SignUpScreen model = {appModel}/>)} />
+                          children = {(props) => (<SignUpScreen
+                              navigation = {props.navigation}
+                              model = {appModel}/>)}
+                      />
                       <Stack.Screen
                           name="Forgot password"
                           component={ForgotPasswordScreen} />
