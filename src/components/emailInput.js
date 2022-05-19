@@ -4,7 +4,7 @@ import { FontAwesome } from "@expo/vector-icons";
 export const EmailInput = ({ onChangeText, value }) => {
   return (
     <View style={styles.container}>
-      <FontAwesome name="envelope" size={24} color="black" />
+      <FontAwesome name="user" size={24} color="black" />
       <TextInput
         testID="emailInput"
         style={styles.input}

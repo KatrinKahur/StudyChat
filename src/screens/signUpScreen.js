@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,101 +6,102 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import { EmailInput } from "../components/emailInput";
-import { StatusBar } from "expo-status-bar";
-import { PasswordInput } from "../components/passwordInput";
-import { UserNameInput } from "../components/userNameInput";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { AlertMessageComponent } from "../components/alertMessageComponent";
 
-export default function Signup(navigation) {
-  const [authStatus, setAuthStatus] = React.useState(0);
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [displayName, setDisplayName] = React.useState("");
-  const [errorMessageState, setErrorMessageState] = useState(null);
+export default class Signup extends Component {
+  constructor() {
+    super();
+    this.state = {
+      displayName: "",
+      email: "",
+      password: "",
+      isLoading: false,
+    };
+  }
+  updateInputVal = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  };
+  registerUser = () => {
+    if (this.state.email === "" && this.state.password === "") {
+      Alert.alert("Enter details to signup!");
+    } else {
+      this.setState({
+        isLoading: true,
+      });
 
-  React.useEffect(
-    function () {
-      if (authStatus > 0)
-        createUserWithEmailAndPassword(getAuth(), email, password)
-          .then((res) => {
-            updateProfile(res.user, {
-              displayName: displayName,
-            });
-            console.log("User registered successfully!");
-            navigation.push("Sign-in");
-          })
-          .catch((error) => {
-            if (
-              error.message === "Invalid password" ||
-              error.message === "Invalid email" ||
-              error.message === "Invalid name"
-            ) {
-              setErrorMessageState(error.message);
-            } else {
-              console.log(error.message);
-              setErrorMessageState(
-                "An unknown error occurred, please try again."
-              );
-            }
+      createUserWithEmailAndPassword(
+        getAuth(),
+        this.state.email,
+        this.state.password
+      )
+        .then((res) => {
+          updateProfile(res.user, {
+            displayName: this.state.displayName,
           });
-    },
-    [authStatus]
-  );
-
-  return (
-    <View style={styles.SignUp}>
-      <View style={styles.signUpContainer}>
+          console.log("User registered successfully!");
+          this.setState({
+            isLoading: false,
+            displayName: "",
+            email: "",
+            password: "",
+          });
+          this.props.navigation.navigate("Sign-in");
+        })
+        .catch((error) => this.setState({ errorMessage: error.message }));
+    }
+  };
+  render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color="#9E9E9E" />
+        </View>
+      );
+    }
+    return (
+      <View style={styles.SignUp}>
         <Text style={styles.header}>Create a new account</Text>
-        <AlertMessageComponent
-          message={errorMessageState}
-          chosenStyle="danger"
-          setMessageCallback={setErrorMessageState}
+
+        <TextInput
+          style={styles.textinput}
+          placeholder="Full name"
+          value={this.state.displayName}
+          onChangeText={(val) => this.updateInputVal(val, "displayName")}
         />
-        <View style={styles.signUpInputContainer}>
-          <UserNameInput
-            onChangeText={(val) => setDisplayName(val)}
-            value={displayName}
-          />
-          <EmailInput onChangeText={(val) => setEmail(val)} value={email} />
-          <PasswordInput
-            onChangeText={(e) => setPassword(e)}
-            value={password}
-          />
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            //onPress={() => this.registerUser()}
-            onPress={() => {
-              if (email === "" && password === "" && displayName === "")
-                setErrorMessageState("Please fill in the credentials");
-              else if (email === "")
-                setErrorMessageState("An email is required");
-              else if (password === "")
-                setErrorMessageState("A password is required");
-              else if (displayName === "")
-                setErrorMessageState("A name is required");
-              else setAuthStatus(authStatus + 1);
-            }}
-          >
-            <Text style={styles.btntext}>Sign up</Text>
-          </TouchableOpacity>
-        </View>
+
+        <TextInput
+          style={styles.textinput}
+          placeholder="Email"
+          value={this.state.email}
+          onChangeText={(val) => this.updateInputVal(val, "email")}
+        />
+
+        <TextInput
+          style={styles.textinput}
+          placeholder="Password"
+          secureTextEntry={true}
+          value={this.state.password}
+          onChangeText={(val) => this.updateInputVal(val, "password")}
+        />
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => this.registerUser()}
+        >
+          <Text style={styles.btntext}>Sign up</Text>
+        </TouchableOpacity>
 
         <Text
-          style={styles.SignUpText}
-          onPress={() => {
-            navigation.push("Sign-in");
-          }}
+          style={styles.loginText}
+          onPress={() => this.props.navigation.navigate("Sign-in")}
         >
           Already Registered? Click here to sign in
         </Text>
       </View>
-      <StatusBar style="auto" />
-    </View>
-  );
+    );
+  }
 }
 
 const styles = StyleSheet.create({
