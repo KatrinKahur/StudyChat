@@ -6,6 +6,7 @@ import {EmailInput} from "../components/emailInput";
 import {PasswordInput} from "../components/passwordInput";
 import {AlertMessageComponent} from "../components/alertMessageComponent";
 import {AppButton} from "../components/appButton";
+import { textDecorationColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 
 export default function SignInScreen( {navigation} ){
@@ -54,6 +55,12 @@ export default function SignInScreen( {navigation} ){
                     else
                         setAuthStatus(authStatus + 1)}}
                     testID="signInBtn"/>
+                <Text
+                    onPress={()=>{navigation.push("Forgot password")}}
+                    style={styles.forgotPasswordText}
+                >
+                    Forgot Password?
+                </Text>
                 <Text style={styles.noAccountYetText}>No account yet? </Text>
                 <AppButton
                     title="Click here to create one!"
@@ -64,6 +71,7 @@ export default function SignInScreen( {navigation} ){
         </View>
     )
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -93,5 +101,10 @@ const styles = StyleSheet.create({
         minWidth: Platform.OS === 'web'? 340 : 0,
         fontSize:  Platform.OS === 'web'? 25 : 18,
         marginTop: 30
+    },
+    forgotPasswordText: {
+        fontSize:  Platform.OS === 'web'? 18 : 12,
+        marginTop: 30,
+        textDecorationLine: 'underline'
     }
 })
