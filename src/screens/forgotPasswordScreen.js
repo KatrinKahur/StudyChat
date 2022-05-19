@@ -35,20 +35,24 @@ export default class ForgotPassword extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcomeText}>Reset your password</Text>
-        <View style={styles.ForgotPassword}>
-          <TextInput
-            style={styles.textinput}
-            placeholder="Enter a registred email please!"
-            value={this.state.email}
-            onChangeText={(val) => this.updateInputVal(val, "email")}
-          />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={(email) => this.handlePasswordReset()}
-          >
-            <Text style={styles.buttonTitle}>Send email</Text>
-          </TouchableOpacity>
+        <View style={styles.forgotPasswordContainer}>
+          <Text style={styles.welcomeText}>Reset your password</Text>
+          <View style={styles.forgotPasswordInputContainer}>
+            <TextInput
+              style={styles.textinput}
+              placeholder="Enter a registred email please!"
+              value={this.state.email}
+              onChangeText={(val) => this.updateInputVal(val, "email")}
+            />
+          </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity
+              style={styles.button}
+              onPress={(email) => this.handlePasswordReset()}
+            >
+              <Text style={styles.buttonTitle}>Send email</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -60,7 +64,7 @@ const styles = StyleSheet.create({
     display: "flex",
     width: "100%",
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     backgroundColor: "white",
   },
   forgotPasswordInputContainer: {
@@ -76,6 +80,7 @@ const styles = StyleSheet.create({
     margin: 25,
   },
   button: {
+    display: "flex",
     backgroundColor: `#1e90ff`,
     paddingVertical: 17,
     marginTop: 10,
