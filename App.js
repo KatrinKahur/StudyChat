@@ -15,7 +15,8 @@ import {ActivityIndicator} from "react-native";
 import ChatScreen from "./src/screens/chatScreen";
 import ContactListScreen from "./src/screens/contactListScreen";
 import VincentChatScreen from "./src/screens/vincentChatScreen";
-import VincentContactListScreen from "./src/screens/VincentContactListScreen";
+import VincentContactListScreen from "./src/screens/vincentContactListScreen";
+
 import AppModel from "./src/appModel";
 
 export default function App() {
@@ -54,7 +55,7 @@ export default function App() {
                         <Stack.Screen name="Main" component={MainScreen} />
                         <Stack.Screen name="Chat" component={ChatScreen} />
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
-                        <Stack.Screen name="VincentContactListScreen" component={VincentContactListScreen} />
+                        <Stack.Screen name="VincentContactList" component={VincentContactListScreen} />
                         <Stack.Screen name="VincentChatScreen" component={VincentChatScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
