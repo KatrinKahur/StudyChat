@@ -19,7 +19,7 @@ export default function MainScreen({navigation}){
             <Button title="Go to ContactListScreen" onPress={() => {navigation.push("Contact list")}}/>
             
             <Button title="Go to new ContactList" onPress={() => {navigation.push("VincentContactList")}}/>
-
+            
 
 
         </View>
