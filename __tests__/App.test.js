@@ -45,34 +45,14 @@ describe('App', () => {
         global.user = {uid: "mocked_uid"};
         const { getByText } = render(<App />);
         await waitFor(() => {
-            expect(getByText('Go to ChatScreen')).toBeTruthy();
-            expect(getByText('Go to ContactListScreen')).toBeTruthy();
-            expect(getByText('Logout')).toBeTruthy();
-        })
-    });
-
-    it('should render ChatScreen when pressing the "Go to ChatScreen"-button', async () => {
-        global.user = {uid: "mocked_uid"};
-        const { getByText } = render(<App/>);
-        fireEvent.press(getByText('Go to ChatScreen'));
-        await waitFor(() => {
-            expect(getByText('Send message')).toBeTruthy();
-        })
-    });
-
-    it('should render ContactListScreen when pressing the "Go to ContactListScreen"-button', async () => {
-        global.user = {uid: "mocked_uid"};
-        const { getByText } = render(<App/>);
-        fireEvent.press(getByText('Go to new ContactList'));
-        await waitFor(() => {
-            expect(getByText('getUser')).toBeTruthy();
+            expect(getByText('sign out')).toBeTruthy();
         })
     });
 
     it('should sign out when pressing the "logout"-button', async () => {
         global.user = {uid: "mocked_uid"};
         const { getByText } = render(<App/>);
-        fireEvent.press(getByText('Logout'));
+        fireEvent.press(getByText('sign out'));
         expect(signOut).toHaveBeenCalled();
         expect(onAuthStateChanged).toHaveBeenCalled();
     });
