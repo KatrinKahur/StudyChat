@@ -13,7 +13,7 @@ export default function MainScreen({navigation, model}){
     
     function waitForSetUserName(){
         if(model.userName === null){
-            setTimeout(() => {waitForSetUsername()}, 500);
+            setTimeout(() => {waitForSetUserName()}, 500);
         }else{
             setUserName(model.userName);
         }

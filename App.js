@@ -20,9 +20,10 @@ import VincentContactListScreen from "./src/screens/vincentContactListScreen";
 
 import AppModel from "./src/appModel";
 
+const appModel = new AppModel();
+
 export default function App() {
     const Stack = createNativeStackNavigator();
-    const appModel = new AppModel();
     const[isSignedIn, setIsSignedIn] = React.useState(null);
     React.useEffect(async () => {
         try {
@@ -55,7 +56,7 @@ export default function App() {
             {isSignedIn ?
                 (
                     <Stack.Navigator initialRouteName="Main">
-                        <Stack.Screen name="Main" children = {() => {<MainScreen model = {appModel}/>}} />
+                        <Stack.Screen name="Main" children = {() => (<MainScreen model = {appModel}/>)} />
                         <Stack.Screen name="Chat" component={ChatScreen} />
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
                         <Stack.Screen name="VincentContactList" component={VincentContactListScreen} />
@@ -72,7 +73,7 @@ export default function App() {
                           component={SignInScreen}/>
                       <Stack.Screen
                           name="Sign-up"
-                          children = {() => {<SignUpScreen model = {appModel}/>}} />
+                          children = {() => (<SignUpScreen model = {appModel}/>)} />
                       <Stack.Screen
                           name="Forgot password"
                           component={ForgotPasswordScreen} />

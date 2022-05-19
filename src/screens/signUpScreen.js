@@ -33,6 +33,9 @@ export default class Signup extends Component {
           displayName: this.state.displayName
         }).then(() => {this.props.model.setUserName(getAuth().currentUser.displayName)})
         console.log('User registered successfully!')
+        if(getAuth().currentUser.displayName === null){
+          console.log("username is never set");
+        }
         this.setState({
           isLoading: false,
           displayName: '',
