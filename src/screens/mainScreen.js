@@ -58,7 +58,7 @@ export default function MainScreen({navigation}){
                     chat screen
                 </Text>
             </Pressable>
-            <Pressable style = {styles.contactListButton} onPress = {() => {navigation.push("Contact list")}}>
+            <Pressable style = {styles.contactListButton} onPress = {() => {navigation.push("VincentContactList")}}>
                 <Text style ={styles.contactListText}>
                     contact list
                 </Text>
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     },
     appNameText: {
         fontSize: Platform.OS === 'web' ? 50 : 30,
-        ontWeight: "bold",
+        fontWeight: "bold",
         alignSelf: "center",
         color: "blue"
     },
@@ -109,8 +109,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignSelf: "center",
         display: "flex",
-        height: "50px",
-        width: "33%",
+        height: "40px",
+        width: "20%",
         flexDirection: "row",
         backgroundColor: "grey",
         margin: 5
@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
         height: 60,
         flexDirection: "row",
         backgroundColor: "brown",
-        margin: 5
+        margin: 5,
+        marginTop: 10
     },
     contactListText: {
         fontSize: Platform.OS === 'web' ? 30 : 15,
@@ -147,17 +148,17 @@ const styles = StyleSheet.create({
         width: "50%",
         height: 30,
         flexDirection: "row",
-        marginBottom: 5,
+        marginBottom: 10,
         marginRight: 40
     },
     contactList: {
-        alignSelf: "left",
-        centerContent: true,
+        alignSelf: "flex-start",
+        justifyContent: "center",
         color: "green",
         marginHorizontal: "15"
         //todo
     },
     view: {
-        height: 200
+        height: 200,
     }
 })
