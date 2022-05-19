@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { Component } from "react";
 import {
   Text,
   SafeAreaView,
@@ -8,18 +10,6 @@ import {
   TouchableOpacity,
   Platform,
 } from "react-native";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
-import React, { Component } from "react";
-import {
-  Text,
-  SafeAreaView,
-  View,
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Platform,
-} from "react-native";
-import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 
 export default class ForgotPassword extends Component {
   constructor() {
@@ -44,7 +34,7 @@ export default class ForgotPassword extends Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
+      <View style={styles.container}>
         <Text style={styles.welcomeText}>Reset your password</Text>
         <View style={styles.ForgotPassword}>
           <TextInput
@@ -60,7 +50,7 @@ export default class ForgotPassword extends Component {
             <Text style={styles.buttonTitle}>Send email</Text>
           </TouchableOpacity>
         </View>
-      </SafeAreaView>
+      </View>
     );
   }
 }
