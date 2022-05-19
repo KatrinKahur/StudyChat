@@ -60,7 +60,7 @@ export default function SignInScreen( {navigation} ){
                         onPress={()=>{navigation.push("Forgot password")}}
                         style={styles.forgotPasswordText}
                     >
-                    Forgot Password?
+                        Forgot Password?
                     </Text>
 
                     <Text style={styles.noAccountYetText}>No account yet? </Text>

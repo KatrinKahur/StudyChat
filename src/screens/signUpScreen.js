@@ -1,96 +1,103 @@
-//import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform} from 'react-native';
-import { TextInput } from 'react-native';
-import {getAuth, createUserWithEmailAndPassword } from "firebase/auth"
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, Platform} from 'react-native';
+import {EmailInput} from "../components/emailInput";
+import {StatusBar} from "expo-status-bar";
+import {PasswordInput} from "../components/passwordInput";
+import {UserNameInput} from "../components/userNameInput";
+import {getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {AlertMessageComponent} from "../components/alertMessageComponent";
 
-export default class Signup extends Component {
-  constructor() {
-    super();
-    this.state = { 
-      displayName: '',
-      email: '', 
-      password: '',
-      isLoading: false
-    }
-  }
-  updateInputVal = (val, prop) => {
-    const state = this.state;
-    state[prop] = val;
-    this.setState(state);
-  }
-  registerUser = () => {
-    if(this.state.email === '' && this.state.password === '') {
-      Alert.alert('Enter details to signup!')
-    } else {
-      this.setState({
-        isLoading: true,
+//const [errorMessageState, setErrorMessageState] = useState(null);
+//const[authStatus, setAuthStatus] = React.useState(0);
+
+
+export default function Signup (navigation){
+
+  const[authStatus, setAuthStatus] = React.useState(0);
+  const[email, setEmail] = React.useState("");
+  const[password, setPassword] = React.useState("");
+  const[displayName, setDisplayName] = React.useState("");
+  const [errorMessageState, setErrorMessageState] = useState(null);
+
+  React.useEffect(function (){
+    if(authStatus > 0)
+    createUserWithEmailAndPassword(getAuth(), email, password)
+    .then((res) => {
+      updateProfile(res.user,{
+        displayName: displayName
       })
-      
-      createUserWithEmailAndPassword(getAuth(),this.state.email, this.state.password)
-      .then((res) => {
-        res.user.updateProfile({
-          displayName: this.state.displayName
+      console.log('User registered successfully!')
+      navigation.push('Sign-in')
+    })
+    .catch((error) => {
+            if(error.message === "Invalid password" ||
+                error.message === "Invalid email" ||
+                error.message === "Invalid name") {
+                setErrorMessageState(error.message);
+            }
+            else {
+                console.log(error.message);
+                setErrorMessageState("An unknown error occurred, please try again.");
+            }
         })
-        console.log('User registered successfully!')
-        this.setState({
-          isLoading: false,
-          displayName: '',
-          email: '', 
-          password: ''
-        })
-        this.props.navigation.navigate('Sign-in')
-      })
-      .catch(error => this.setState({ errorMessage: error.message }))      
-    }
-  }
-  render() {
-    if(this.state.isLoading){
-      return(
-        <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#9E9E9E"/>
-        </View>
-      )
-    }   
-  return (
+}, [authStatus]);
+  
+  return(
     <View style={styles.SignUp}>
-
+      <View style={styles.signUpContainer}>
         <Text style={styles.header}>Create a new account</Text>
-
-        <TextInput style={styles.textinput} 
-        placeholder="Full name" 
-        value={this.state.displayName}
-        onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+        <AlertMessageComponent
+            message={errorMessageState}
+            chosenStyle="danger"
+            setMessageCallback={setErrorMessageState}
         />
-
-        <TextInput style={styles.textinput}
-         placeholder="Email" 
-         value={this.state.email}
-         onChangeText={(val) => this.updateInputVal(val, 'email')}
+      <View style={styles.signUpInputContainer}>
+        <UserNameInput 
+          onChangeText={(val) => setDisplayName(val)}
+          value={displayName}
+        />
+        <EmailInput 
+          onChangeText={(val) => setEmail(val)}
+          value={email}
          />
-
-        <TextInput style={styles.textinput}
-         placeholder="Password" 
-         secureTextEntry={true} 
-         value={this.state.password}
-         onChangeText={(val) => this.updateInputVal(val, 'password')}
+        <PasswordInput 
+          onChangeText={(e) => setPassword(e)}
+          value={password}
          />
-
-        <TouchableOpacity style={styles.button}
-        onPress={() => this.registerUser()}
+        </View>
+        <View style={styles.buttonContainer}>
+        <TouchableOpacity 
+          style={styles.button}
+          //onPress={() => this.registerUser()}
+          onPress={()=>{
+            if((email === "") && (password === "") && (displayName === ""))
+                setErrorMessageState("Please fill in the credentials");
+            else if(email === "")
+                setErrorMessageState("An email is required");
+            else if(password === "")
+                setErrorMessageState("A password is required");
+            else if(displayName === "")
+                setErrorMessageState("A name is required");
+            else
+                setAuthStatus(authStatus + 1);
+        }}
         >
-            <Text style={styles.btntext}>Sign up</Text>
+          <Text style={styles.btntext}>Sign up</Text>
         </TouchableOpacity>
+        </View>
 
         <Text 
-          style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Sign-in')}>
+          style={styles.SignUpText}
+          onPress={()=>{navigation.push('Sign-in')}}
+        >
           Already Registered? Click here to sign in
-        </Text>     
+        </Text>
+      </View>   
+      <StatusBar style="auto"/>
     </View>
-  );
- }
+  )
 }
+
 
 const styles = StyleSheet.create({
   SignUp: {
@@ -101,7 +108,7 @@ const styles = StyleSheet.create({
     paddingLeft: 60,
     paddingRight: 60,
   },
-  loginText: {
+  SignUpText: {
     color: '#3740FE',
     marginTop: 25,
     textAlign: 'center'
@@ -117,16 +124,18 @@ const styles = StyleSheet.create({
   },
   textinput: {
       alignSelf: 'stretch',
+      marginTop: Platform.OS === 'web'? 10 : 5,
+      paddingRight: 10,
+      paddingTop: 20,
       height: 40,
       marginBottom: 30,
-      color: '#000000',
-      borderBottomColor: '#f8f8f8',
+      borderBottomColor: '#000000',
       borderBottomWidth: 1,
   },
   button: {
-      alignSelf: 'stretch',
-      alignItems: 'center',
-      padding: 20,
+     alignSelf: 'stretch',
+     alignItems: 'center',
+     padding: 20,
      backgroundColor: '#1e90ff',
      marginTop: 30,
      borderRadius: 5,
@@ -134,6 +143,25 @@ const styles = StyleSheet.create({
   btntext: {
       color: '#fff',
       fontWeight: 'bold',
-  }
+  },
+  welcomeText: {
+    fontSize: Platform.OS === 'web' ? 65 : 40,
+    marginBottom: Platform.OS === 'web' ? 50 : 35,
+    fontWeight: "bold",
+    textAlign: "center"
+  },
+  signUpContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1
+},
+signUpInputContainer: {
+  width: Platform.OS === 'web'? "15%":"55%",
+  minWidth: Platform.OS === 'web'? 340 : 0,
+},
+buttonContainer: {
+  width: Platform.OS === 'web'? "15%" : "55%",
+  minWidth: Platform.OS === 'web'? 340 : 0
+},
 });
 
