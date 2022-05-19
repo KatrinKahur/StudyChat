@@ -1,4 +1,4 @@
-import { View, Button, Platform, Text, StatusBar, FlatList, StyleSheet, ScrollView, TextInput } from "react-native";
+import { View, Button, Platform, Text, StatusBar, FlatList, StyleSheet, ScrollView, TextInput} from "react-native";
 import AuthUser from "../external/authUser";
 import MainScreen from "./mainScreen";
 import { NavigationContainer, Route } from '@react-navigation/native';
@@ -119,16 +119,24 @@ export default function VincentChatScreen({ navigation, route }) {
 
     //console.log(Array.isArray(messages))
 
+    function sendMessage(){
+        if (currentMessage !== "") {
+            setMessageSentStatus(true)
+        }
+
+
+    }
+
 
     return (
         <>
         <View>
-            <Button title="HELLO"></Button>
-            <Text>targetEmail: {route.params.targetEmail} </Text>
-            <Button title="getRelevantMessages" onPress={() => getMessages()} />
+           
+        <Text style={styles.textstyle}>{route.params.targetUsername} </Text>
+            
+        
 
-
-            <ScrollView>
+            <ScrollView style={styles.scrollview}>
 
                 {filteredMessages.map(items => {
 
@@ -141,17 +149,22 @@ export default function VincentChatScreen({ navigation, route }) {
                     }
 
                 })}
+
+
             </ScrollView>
+
+           
+
         </View>
 
-            <View>
-            <TextInput
+         {   <View>
+            <TextInput style={styles.textInput}
                 value={currentMessage}
                 onChangeText={(message) => setCurrentMessage(message)}
                 placeholder="Enter a message..."/>
 
-            <Button title="Send message" onPress={() => {setMessageSentStatus(true)}}/>
-            </View>
+            <Button style={styles.sendMessageButton} title="Send message" onPress={() => {sendMessage()}}/>
+            </View>     }
                 </>
 
     )
@@ -179,7 +192,7 @@ const styles = StyleSheet.create({
         fontSize: 14*/
 
         backgroundColor: "#0078fe",
-        padding: 10,
+        padding: Platform.OS === 'web' ? 10 : 5,
         marginLeft: '45%',
         borderRadius: 5,
         //marginBottom: 15,
@@ -189,8 +202,8 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         //maxWidth: 500,
 
-        borderRadius: 20,
-
+        borderRadius: Platform.OS === 'web' ? 20 : 50,
+        maxHeight: Platform.OS === 'web' ? 100 : 50,
 
 
     },
@@ -202,7 +215,6 @@ const styles = StyleSheet.create({
         fontSize: 14*/
         backgroundColor: "#dedede",
         padding: 10,
-        borderRadius: 5,
         marginTop: 5,
         marginLeft: "5%",
         maxWidth: '50%',
@@ -211,6 +223,31 @@ const styles = StyleSheet.create({
         //padding: 14,
 
         //alignItems:"center",
-        borderRadius: 20,
+        borderRadius: Platform.OS === 'web' ? 20 : 90,
+
+        maxHeight: Platform.OS === 'web' ? 100 : 50,
+    },
+
+    textstyle:{
+        textAlign: "center",
+        fontSize: 20,
+    },
+
+    textInput:{
+        minHeight: '15%',
+        fontSize: 20,
+    },
+
+    sendMessageButton:{
+        minHeight: '15%',
+    },
+
+    scrollView: {
+
+        maxHeight: '70%',
+
     }
+
+
+
 });
