@@ -41,9 +41,11 @@ export default function App() {
             if(user){
                 setIsSignedIn(true);
                 appModel.setUserId(user.uid);
+                appModel.setUserName(user.displayName);
             } else {
                 setIsSignedIn(false);
                 appModel.setUserId(null);
+                appModel.setUserName(null);
             }
         });
     }, []);
@@ -53,7 +55,7 @@ export default function App() {
             {isSignedIn ?
                 (
                     <Stack.Navigator initialRouteName="Main">
-                        <Stack.Screen name="Main" component={MainScreen} />
+                        <Stack.Screen name="Main" children = {() => {<MainScreen model = {appModel}/>}} />
                         <Stack.Screen name="Chat" component={ChatScreen} />
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
                         <Stack.Screen name="VincentContactList" component={VincentContactListScreen} />
@@ -70,7 +72,7 @@ export default function App() {
                           component={SignInScreen}/>
                       <Stack.Screen
                           name="Sign-up"
-                          component={SignUpScreen} />
+                          children = {() => {<SignUpScreen model = {appModel}/>}} />
                       <Stack.Screen
                           name="Forgot password"
                           component={ForgotPasswordScreen} />

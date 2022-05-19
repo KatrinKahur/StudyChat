@@ -31,7 +31,7 @@ export default class Signup extends Component {
       .then((res) => {
         updateProfile(res.user,{
           displayName: this.state.displayName
-        })
+        }).then(() => {this.props.model.setUserName(getAuth().currentUser.displayName)})
         console.log('User registered successfully!')
         this.setState({
           isLoading: false,
