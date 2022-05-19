@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform} from 'react-native';
 import { TextInput } from 'react-native';
 import {getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
 
 export default class Signup extends Component {
   constructor() {
@@ -14,6 +15,22 @@ export default class Signup extends Component {
       isLoading: false
     }
   }
+
+
+  retrieveData = () => {
+
+      const dbRef = ref(db);
+      get(child(dbRef, '/users'))
+        .then((snapshot) => {
+          var students = [];
+          snapshot.forEach(childSnapshot => {
+            students.push(childSnapshot.val());
+          });
+          addAllItems(students);
+        })
+    
+  }
+
   updateInputVal = (val, prop) => {
     const state = this.state;
     state[prop] = val;
@@ -31,6 +48,25 @@ export default class Signup extends Component {
       .then((res) => {
         updateProfile(res.user,{
           displayName: this.state.displayName
+        }).then(()=> {
+          
+
+            const db = getDatabase();
+            set(ref(db, 'users/' + res.user.uid), {
+              username: res.user.displayName,
+              email: res.user.email,
+            });
+
+            console.log("FINISH ADDED USER")
+          
+
+
+
+
+
+
+          
+
         })
         console.log('User registered successfully!')
         this.setState({
@@ -39,7 +75,7 @@ export default class Signup extends Component {
           email: '', 
           password: ''
         })
-        this.props.navigation.navigate('Sign-in')
+        //this.props.navigation.navigate('Sign-in')
       })
       .catch(error => this.setState({ errorMessage: error.message }))      
     }
