@@ -1,8 +1,7 @@
 import { getAuth } from "firebase/auth";
 import AuthUser from "../external/authUser";
 import React, { useState } from 'react';
-import { Pressable, View, Text, StyleSheet, ScrollView} from 'react-native';
-import { Platform } from "react-native-web";
+import { Pressable, View, Text, StyleSheet, Platform } from 'react-native';
 //test
 import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 //import { users, setUsers } from "./chatScreen";
