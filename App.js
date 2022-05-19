@@ -9,13 +9,15 @@ import { Platform } from 'react-native';
 import SignInScreen from "./src/screens/signInScreen";
 import SignUpScreen from "./src/screens/signUpScreen";
 import MainScreen from "./src/screens/mainScreen";
+import ForgotPasswordScreen from "./src/screens/forgotPasswordScreen";
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {ActivityIndicator} from "react-native";
 import ChatScreen from "./src/screens/chatScreen";
 import ContactListScreen from "./src/screens/contactListScreen";
 import VincentChatScreen from "./src/screens/vincentChatScreen";
-import VincentContactListScreen from "./src/screens/VincentContactListScreen";
+import VincentContactListScreen from "./src/screens/vincentContactListScreen";
+
 import AppModel from "./src/appModel";
 
 export default function App() {
@@ -54,22 +56,25 @@ export default function App() {
                         <Stack.Screen name="Main" component={MainScreen} />
                         <Stack.Screen name="Chat" component={ChatScreen} />
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
-                        <Stack.Screen name="VincentContactListScreen" component={VincentContactListScreen} />
+                        <Stack.Screen name="VincentContactList" component={VincentContactListScreen} />
                         <Stack.Screen name="VincentChatScreen" component={VincentChatScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
-                    (
-                        <ActivityIndicator size="large" />
-                    ) : (
-                        <Stack.Navigator initialRouteName="Sign-in">
-                            <Stack.Screen
-                                options={{headerShown: Platform.OS !== "web"}}
-                                name="Sign-in"
-                                component={SignInScreen}/>
-                            <Stack.Screen
-                                name="Sign-up"
-                                component={SignUpScreen} />
-                        </Stack.Navigator>
+                (
+                    <ActivityIndicator size="large" />
+                ) : (
+                    <Stack.Navigator initialRouteName="Sign-in">
+                      <Stack.Screen
+                          options={{headerShown: Platform.OS !== "web"}}
+                          name="Sign-in"
+                          component={SignInScreen}/>
+                      <Stack.Screen
+                          name="Sign-up"
+                          component={SignUpScreen} />
+                      <Stack.Screen
+                          name="Forgot password"
+                          component={ForgotPasswordScreen} />
+                    </Stack.Navigator>
                     )
             }
         </NavigationContainer>

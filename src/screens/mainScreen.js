@@ -6,6 +6,8 @@ import { Platform } from "react-native-web";
 //test
 import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 //import { users, setUsers } from "./chatScreen";
+import VincentChatScreen from "./vincentChatScreen";
+import VincentContactListScreen from "./vincentContactListScreen.js";
 
 export default function MainScreen({navigation}){
     React.useEffect(function(){
@@ -37,6 +39,7 @@ export default function MainScreen({navigation}){
 
     const students = GetAllDataOnce();*/
 
+
     return(<>
         <View style = {styles.view}>
             <Text style = {styles.appNameText}>
@@ -50,7 +53,12 @@ export default function MainScreen({navigation}){
                 {console.log(getAuth().currentUser.displayName)}
             </Text>
 
-            <Pressable style = {styles.contactListButton} onPress = {() => {navigation.navigate("Contact list")}}>
+            <Pressable style = {styles.contactListButton} onPress = {() => {navigation.push("Chat")}}>
+                <Text style ={styles.contactListText}>
+                    chat screen
+                </Text>
+            </Pressable>
+            <Pressable style = {styles.contactListButton} onPress = {() => {navigation.push("Contact list")}}>
                 <Text style ={styles.contactListText}>
                     contact list
                 </Text>

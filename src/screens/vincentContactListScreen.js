@@ -11,8 +11,6 @@ import { getReactNativePersistence } from "firebase/auth/react-native";
 import React, { useState, useEffect } from "react";
 import { getDatabase, ref, set, onValue, child, get, onChildAdded } from "firebase/database";
 import ChatScreen from "./chatScreen";
-import VincentChatScreen from "./vincentChatScreen";
-
 // Import Admin SDK
 export default function VincentContactListScreen({ navigation }) {
 
@@ -78,7 +76,7 @@ export default function VincentContactListScreen({ navigation }) {
      { <Button title="save to Database" onPress={() => writeUserData(0, "POPbdullah", "michael@gmail.com", "URL.RANDOM")} />}
       <Button title="getData" onPress={() => GetAllDataOnce()}></Button>
 
-      <Button title="chatScreen" onPress={()=>navigation.push('VincentChatScreen', { targetEmail: a})}/>
+      <Button title="chatScreen" onPress={()=>navigation.push('chatScreen', { targetEmail: a})}/>
 
       <Button title="getUser" onPress={()=>getUser()}/>
       
@@ -88,7 +86,7 @@ export default function VincentContactListScreen({ navigation }) {
       {users.map((users) => (
 
       //<View key={users.username} HELLO> HELLO
-      <Text style={styles.item} key={users.username} onPress={() => navigation.push('VincentChatScreen', {targetEmail: users.email})}>{users.email}</Text>
+      <Text style={styles.item} key={users.email} onPress={() => navigation.push('VincentChatScreen', {targetEmail: users.email})}>{users.email}</Text>
        // </View>
     ))}
 
@@ -98,7 +96,7 @@ export default function VincentContactListScreen({ navigation }) {
 
     </View>
   )
-  }
+      }
  
 const styles = StyleSheet.create({
   container: {

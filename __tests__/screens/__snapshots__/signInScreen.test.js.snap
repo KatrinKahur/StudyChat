@@ -150,6 +150,18 @@ exports[`SignInScreen should render correctly 1`] = `
       </Text>
     </View>
     <Text
+      onPress={[Function]}
+      style={
+        Object {
+          "fontSize": 12,
+          "marginTop": 30,
+          "textDecorationLine": "underline",
+        }
+      }
+    >
+      Forgot Password?
+    </Text>
+    <Text
       style={
         Object {
           "fontSize": 18,
