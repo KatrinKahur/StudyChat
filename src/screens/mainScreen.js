@@ -8,12 +8,18 @@ import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 import VincentChatScreen from "./vincentChatScreen";
 import VincentContactListScreen from "./vincentContactListScreen.js";
 
-export default function MainScreen({navigation}){
-    React.useEffect(function(){
-        const username = getAuth().currentUser.displayName;
-        console.log("username: ");
-        console.log("username: ", username);
-    }, [])
+export default function MainScreen({navigation, model}){
+    const [userName, setUserName] = React.useState(model.userName)
+    
+    function waitForSetUserName(){
+        if(model.userName === null){
+            setTimeout(() => {waitForSetUserName()}, 500);
+        }else{
+            setUserName(model.userName);
+        }
+    }
+
+    React.useEffect(() => {waitForSetUserName()}, [model.userName])
 
 /*   function addAllItems(data) {
         setUsers(data);
@@ -48,8 +54,8 @@ export default function MainScreen({navigation}){
                 Welcome
             </Text>
             <Text style = {styles.userInfo}>
-                {getAuth().currentUser.displayName}
-                {console.log(getAuth().currentUser.displayName)}
+                {userName}
+                {console.log(userName)}
             </Text>
 
             <Pressable style = {styles.contactListButton} onPress = {() => {navigation.push("Chat")}}>
