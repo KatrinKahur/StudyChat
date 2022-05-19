@@ -1,5 +1,7 @@
 import {View, Button} from "react-native";
 import AuthUser from "../external/authUser";
+import VincentChatScreen from "./vincentChatScreen";
+import VincentContactListScreen from "./VincentContactListScreen";
 
 export default function MainScreen({navigation}){
     return(
@@ -9,8 +11,17 @@ export default function MainScreen({navigation}){
                     console.log("Error at sign out: ", error.message);
                 })
             }}/>
+
+
+
+            
             <Button title="Go to ChatScreen" onPress={() => {navigation.push("Chat")}}/>
             <Button title="Go to ContactListScreen" onPress={() => {navigation.push("Contact list")}}/>
+            
+            <Button title="Go to new ContactList" onPress={() => {navigation.push("VincentContactListScreen")}}/>
+
+
+
         </View>
     )
 }
