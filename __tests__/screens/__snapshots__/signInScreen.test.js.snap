@@ -155,7 +155,9 @@ exports[`SignInScreen should render correctly 1`] = `
         Object {
           "fontSize": 12,
           "marginTop": 30,
+          "minWidth": 0,
           "textDecorationLine": "underline",
+          "width": "55%",
         }
       }
     >
