@@ -119,14 +119,21 @@ export default function VincentChatScreen({ navigation, route }) {
 
     //console.log(Array.isArray(messages))
 
+    function sendMessage(){
+        if (currentMessage !== "") {
+            setMessageSentStatus(true)
+        }
+
+
+    }
+
 
     return (
         <>
         <View>
-            <Button title="HELLO"></Button>
-            <Text>targetEmail: {route.params.targetEmail} </Text>
-            <Button title="getRelevantMessages" onPress={() => getMessages()} />
-
+           
+            <Text style={styles.textstyle}>{route.params.targetEmail} </Text>
+        
 
             <ScrollView>
 
@@ -150,7 +157,7 @@ export default function VincentChatScreen({ navigation, route }) {
                 onChangeText={(message) => setCurrentMessage(message)}
                 placeholder="Enter a message..."/>
 
-            <Button title="Send message" onPress={() => {setMessageSentStatus(true)}}/>
+            <Button title="Send message" onPress={() => {sendMessage()}}/>
             </View>
                 </>
 
@@ -212,5 +219,12 @@ const styles = StyleSheet.create({
 
         //alignItems:"center",
         borderRadius: 20,
+    },
+
+    textstyle:{
+        textAlign: "center",
+        fontSize: 20,
     }
+
+
 });

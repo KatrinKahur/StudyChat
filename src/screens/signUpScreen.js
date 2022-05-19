@@ -50,7 +50,6 @@ export default class Signup extends Component {
           displayName: this.state.displayName
         }).then(()=> {
           
-
             const db = getDatabase();
             set(ref(db, 'users/' + res.user.uid), {
               username: res.user.displayName,
@@ -58,15 +57,6 @@ export default class Signup extends Component {
             });
 
             console.log("FINISH ADDED USER")
-          
-
-
-
-
-
-
-          
-
         })
         console.log('User registered successfully!')
         this.setState({

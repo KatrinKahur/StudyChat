@@ -72,15 +72,7 @@ export default function VincentContactListScreen({ navigation }) {
 
 
   return (
-    <View style={{ selfAlign: "center", margin: "30%" }}>
-     { <Button title="save to Database" onPress={() => writeUserData(0, "POPbdullah", "michael@gmail.com", "URL.RANDOM")} />}
-      <Button title="getData" onPress={() => GetAllDataOnce()}></Button>
-
-      <Button title="chatScreen" onPress={()=>navigation.push('chatScreen', { targetEmail: a})}/>
-
-      <Button title="getUser" onPress={()=>getUser()}/>
-      
- 
+   
 
       <ScrollView>
       {users.map((users) => (
@@ -92,9 +84,6 @@ export default function VincentContactListScreen({ navigation }) {
 
       </ScrollView>
 
-      
-
-    </View>
   )
       }
  
