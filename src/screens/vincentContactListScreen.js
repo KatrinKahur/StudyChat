@@ -78,7 +78,7 @@ export default function VincentContactListScreen({ navigation }) {
       {users.map((users) => (
 
       //<View key={users.username} HELLO> HELLO
-      <Text style={styles.item} key={users.email} onPress={() => navigation.push('VincentChatScreen', {targetEmail: users.email})}>{users.email}</Text>
+      <Text style={styles.item} key={users.email} onPress={() => navigation.push('VincentChatScreen', {targetEmail: users.email, targetUsername: users.username})}>{users.username}</Text>
        // </View>
     ))}
 
