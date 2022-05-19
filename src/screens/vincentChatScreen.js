@@ -1,4 +1,15 @@
-import { View, Button, Platform, Text, StatusBar, FlatList, StyleSheet, ScrollView, TextInput} from "react-native";
+import {
+    View,
+    Button,
+    Platform,
+    Text,
+    StatusBar,
+    FlatList,
+    StyleSheet,
+    ScrollView,
+    TextInput,
+    TouchableOpacity
+} from "react-native";
 import AuthUser from "../external/authUser";
 import MainScreen from "./mainScreen";
 import { NavigationContainer, Route } from '@react-navigation/native';
@@ -12,6 +23,7 @@ import React, { useState, useEffect } from "react";
 import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
 import contactListScreen from "./chatScreen";
 import moment from "moment";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 export default function VincentChatScreen({ navigation, route }) {
 
@@ -130,43 +142,48 @@ export default function VincentChatScreen({ navigation, route }) {
 
     return (
         <>
-        <View>
-           
-        <Text style={styles.textstyle}>{route.params.targetUsername} </Text>
-            
-        
+            <View>
 
-            <ScrollView style={styles.scrollview}>
-
-                {filteredMessages.map(items => {
-
-                    if (items.color == "green") {
-                        return <Text style={styles.green} key={items.time + items.color} >{items.message}</Text>
-                    }
-
-                    if (items.color == "blue") {
-                        return <Text style={styles.blue} key={items.time + items.color} >{items.message}</Text>
-                    }
-
-                })}
+                <Text style={styles.textstyle}>{route.params.targetUsername} </Text>
 
 
-            </ScrollView>
 
-           
+                <ScrollView style={styles.scrollview}>
 
-        </View>
+                    {filteredMessages.map(items => {
 
-         {   <View>
-            <TextInput style={styles.textInput}
-                value={currentMessage}
-                onChangeText={(message) => setCurrentMessage(message)}
-                placeholder="Enter a message..."/>
+                        if (items.color == "green") {
+                            return <Text style={styles.green} key={items.time + items.color} >{items.message}</Text>
+                        }
 
-            <Button style={styles.sendMessageButton} title="Send message" onPress={() => {sendMessage()}}/>
-            </View>     }
-                </>
+                        if (items.color == "blue") {
+                            return <Text style={styles.blue} key={items.time + items.color} >{items.message}</Text>
+                        }
 
+                    })}
+
+
+                </ScrollView>
+
+
+
+            </View>
+
+            {   <View style={{flexDirection: "row", marginLeft: "5%", marginBottom: "5%", marginTop: 10}}>
+                    <TextInput
+                        value={currentMessage}
+                        style={styles.messageContainer}
+                        onChangeText={(message) => setCurrentMessage(message)}
+                        placeholder="Enter a message..." />
+                    <TouchableOpacity
+                        onPress={() => {sendMessage()}}
+                        style={styles.sendButton}
+                    >
+                        <MaterialCommunityIcons name="send" size={30} color="white" />
+                    </TouchableOpacity>
+                </View>
+            }
+        </>
     )
 }
 
@@ -177,6 +194,19 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         paddingTop: 20,
         paddingHorizontal: 10
+    },
+    sendButton: {
+        marginLeft: Platform.OS === 'web' ? "1%" : "2%",
+        padding: 8,
+        backgroundColor: "black",
+        borderRadius: 30
+    },
+    messageContainer: {
+        backgroundColor: Platform.OS === 'web' ? `#add8e6` :`#fffaf0`,
+        paddingVertical: 5,
+        paddingHorizontal: 15,
+        borderRadius: 20,
+        width: Platform.OS === 'web' ? "50%" : "75%"
     },
     "item": {
         marginTop: 24,
@@ -197,7 +227,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         //marginBottom: 15,
         marginTop: 5,
-        marginRight: "5%",
+        marginRight: Platform.OS === 'web' ? "44%" : "10%",
         maxWidth: '50%',
         alignSelf: 'flex-end',
         //maxWidth: 500,
