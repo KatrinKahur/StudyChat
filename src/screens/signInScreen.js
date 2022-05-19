@@ -6,8 +6,6 @@ import {EmailInput} from "../components/emailInput";
 import {PasswordInput} from "../components/passwordInput";
 import {AlertMessageComponent} from "../components/alertMessageComponent";
 import {AppButton} from "../components/appButton";
-import { textDecorationColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
-
 
 export default function SignInScreen( {navigation} ){
     const[authStatus, setAuthStatus] = React.useState(0);
@@ -103,6 +101,8 @@ const styles = StyleSheet.create({
         marginTop: 30
     },
     forgotPasswordText: {
+        width: Platform.OS === 'web'? "15%":"55%",
+        minWidth: Platform.OS === 'web'? 340 : 0,
         fontSize:  Platform.OS === 'web'? 18 : 12,
         marginTop: 30,
         textDecorationLine: 'underline'
