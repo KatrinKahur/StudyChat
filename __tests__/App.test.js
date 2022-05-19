@@ -63,9 +63,9 @@ describe('App', () => {
     it('should render ContactListScreen when pressing the "Go to ContactListScreen"-button', async () => {
         global.user = {uid: "mocked_uid"};
         const { getByText } = render(<App/>);
-        fireEvent.press(getByText('Go to ContactListScreen'));
+        fireEvent.press(getByText('Go to new ContactList'));
         await waitFor(() => {
-            expect(getByText('Contact list screen')).toBeTruthy();
+            expect(getByText('getUser')).toBeTruthy();
         })
     });
 

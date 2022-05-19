@@ -16,7 +16,13 @@ jest.mock("firebase/auth/react-native", () => {
 })
 jest.mock('firebase/auth', () => {
     return {
-        getAuth: jest.fn(),
+        getAuth: jest.fn(() => {
+            return {
+                currentUser: {
+                    displayName: "SomeName"
+                }
+            }
+        }),
         initializeAuth: jest.fn(),
         onAuthStateChanged: jest.fn((auth, cb) => {
             cb(global.user);
@@ -51,6 +57,13 @@ jest.mock('firebase/database', () => {
         set: jest.fn(),
         push: jest.fn(),
         child: jest.fn(),
-        get: jest.fn()
+        get: jest.fn(() => {
+            return new Promise( (doResolve) => {
+                doResolve(true);
+            })
+        }),
+        onChildAdded: jest.fn((ignore, cb) => {
+            cb();
+        })
     }
 });
