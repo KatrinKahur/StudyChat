@@ -14,7 +14,7 @@ export default function MainScreen({navigation}){
         console.log("username: ", username);
     }, [])
 
-   function addAllItems(data) {
+/*   function addAllItems(data) {
         setUsers(data);
     }
     
@@ -35,7 +35,7 @@ export default function MainScreen({navigation}){
         return students;
     }
 
-    const students = GetAllDataOnce();
+    const students = GetAllDataOnce();*/
 
     return(<>
         <View style = {styles.view}>
@@ -44,7 +44,9 @@ export default function MainScreen({navigation}){
             </Text>
 
             <Text style = {styles.userInfo}>
+                Welcome
                 {getAuth().currentUser.displayName}
+                {console.log(getAuth().currentUser.displayName)}
             </Text>
 
             <Pressable style = {styles.contactListButton} onPress = {() => {navigation.navigate("Contact list")}}>
@@ -61,9 +63,11 @@ export default function MainScreen({navigation}){
                 </Pressable>
             {//}else{
 }
-                <ScrollView style = {styles.contactList}>
+{/*                <ScrollView style = {styles.contactList}>
                     <Text>
-                        {students.map().displayName}
+                        {students.map()=>{
+                            return displayName;
+                        }}
                         testingtestingtesting
                         testingtestingtesting
                         testingtestingtesting
@@ -71,7 +75,7 @@ export default function MainScreen({navigation}){
                         testingtestingtesting
                         testingtestingtesting
                     </Text>;
-                </ScrollView>
+                </ScrollView>*/}
             {//}
 }
         </View>
@@ -127,7 +131,7 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     userInfo: {
-        fontSize: Platform.OS === 'web' ? 50 : 30,
+        fontSize: Platform.OS === 'web' ? 40 : 20,
         justifyContent: "center",
         alignSelf: "center",
         display: "flex",
