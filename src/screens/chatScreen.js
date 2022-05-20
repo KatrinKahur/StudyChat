@@ -94,6 +94,33 @@ const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: 'lightblue'
     },
+   
+      chatScreenContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        flex: 1,
+      },
+      buttonContainer: {
+        margin: 25,
+      },
+      button: {
+        display: "flex",
+        backgroundColor: `#1e90ff`,
+        paddingVertical: 17,
+        marginTop: 10,
+        marginBottom: 15,
+        alignItems: "center",
+        borderRadius: 5,
+      },
+      textinput: {
+        alignSelf: "stretch",
+        height: 40,
+        marginBottom: 30,
+        color: "#000000",
+        borderBottomColor: "#000000",
+        borderBottomWidth: 1,
+      },
+
     textInput: {
         width: '100%',
         height: 50,
