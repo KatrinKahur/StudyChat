@@ -58,6 +58,7 @@ exports[`SignInScreen should render correctly 1`] = `
         <TextInput
           allowFontScaling={true}
           onChangeText={[Function]}
+          onSubmitEditing={[Function]}
           placeholder="Email.."
           rejectResponderTermination={true}
           style={
@@ -92,6 +93,7 @@ exports[`SignInScreen should render correctly 1`] = `
         <TextInput
           allowFontScaling={true}
           onChangeText={[Function]}
+          onSubmitEditing={[Function]}
           placeholder="Password.."
           rejectResponderTermination={true}
           secureTextEntry={true}

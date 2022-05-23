@@ -1,16 +1,17 @@
 import { Platform, StyleSheet, TextInput, View } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-export const EmailInput = ({ onChangeText, value }) => {
+export const EmailInput = ({ onChangeText, onSubmitEditing, value }) => {
   return (
     <View style={styles.container}>
       <FontAwesome name="user" size={24} color="black" />
       <TextInput
-        testID="emailInput"
-        style={styles.input}
-        value={value}
-        onChangeText={onChangeText}
-        placeholder="Email.."
+          testID="emailInput"
+          style={styles.input}
+          value={value}
+          onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
+          placeholder="Email.."
       />
     </View>
   );

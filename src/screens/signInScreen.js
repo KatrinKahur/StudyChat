@@ -11,7 +11,18 @@ export default function SignInScreen( {navigation} ){
     const[authStatus, setAuthStatus] = React.useState(0);
     const[email, setEmail] = React.useState("");
     const[password, setPassword] = React.useState("");
-    const [errorMessageState, setErrorMessageState] = useState(null);
+    const[errorMessageState, setErrorMessageState] = useState(null);
+
+    const handleSignInRequest = () => {
+        if((email === "") && (password === ""))
+            setErrorMessageState("Please fill in the credentials");
+        else if(email === "")
+            setErrorMessageState("An email is required");
+        else if(password === "")
+            setErrorMessageState("A password is required");
+        else
+            setAuthStatus(authStatus + 1)
+    }
 
     React.useEffect(function (){
         if(authStatus > 0)
@@ -28,7 +39,6 @@ export default function SignInScreen( {navigation} ){
             })
     }, [authStatus]);
 
-
     return(
         <View style={styles.container}>
             <View style={styles.signInContainer}>
@@ -38,20 +48,18 @@ export default function SignInScreen( {navigation} ){
                     chosenStyle="danger"
                     setMessageCallback={setErrorMessageState}/>
                 <View style={styles.signInInputContainer}>
-                    <EmailInput onChangeText={(e) => setEmail(e)} value={email}/>
-                    <PasswordInput onChangeText={(e) => setPassword(e)} value={password} />
+                    <EmailInput
+                        onChangeText={(e) => setEmail(e)}
+                        onSubmitEditing={handleSignInRequest}
+                        value={email}/>
+                    <PasswordInput
+                        onChangeText={(e) => setPassword(e)}
+                        onSubmitEditing={handleSignInRequest}
+                        value={password} />
                 </View>
                 <AppButton
                     title="Sign in"
-                    onPress={()=>{
-                    if((email === "") && (password === ""))
-                        setErrorMessageState("Please fill in the credentials");
-                    else if(email === "")
-                        setErrorMessageState("An email is required");
-                    else if(password === "")
-                        setErrorMessageState("A password is required");
-                    else
-                        setAuthStatus(authStatus + 1)}}
+                    onPress={handleSignInRequest}
                     testID="signInBtn"/>
                 <Text
                     onPress={()=>{navigation.push("Forgot password")}}
@@ -69,7 +77,6 @@ export default function SignInScreen( {navigation} ){
         </View>
     )
 }
-
 
 const styles = StyleSheet.create({
     container: {
