@@ -41,10 +41,10 @@ export default class Signup extends Component {
       console.log('Enter details to signup!')
     } else if (!this.state.email.includes('@' && ('.se' || '.com'))) {
       console.log('Invalid email')
-    } else if (this.state.password === '') {
+    } else if (this.state.password === '' || this.state.email === '') {
       console.log('Password is required!')
     } else if (this.state.password.length < 6) {
-      console.log('Password is too short, it has to be at least 6 characters.')
+      console.log('Password is too short, it has to be at least 6 characters long.')
     } else if (this.state.displayName === '') {
       console.log('Username is required!')
     } else {
