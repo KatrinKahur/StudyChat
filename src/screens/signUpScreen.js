@@ -1,16 +1,16 @@
 //import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform } from 'react-native';
 import { TextInput } from 'react-native';
-import {getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
 
 export default class Signup extends Component {
   constructor() {
     super();
-    this.state = { 
+    this.state = {
       displayName: '',
-      email: '', 
+      email: '',
       password: '',
       isLoading: false
     }
@@ -19,15 +19,15 @@ export default class Signup extends Component {
 
   retrieveData = () => {
 
-      const dbRef = ref(db);
-      get(child(dbRef, '/users'))
-        .then((snapshot) => {
-          var students = [];
-          snapshot.forEach(childSnapshot => {
-            students.push(childSnapshot.val());
-          });
-          addAllItems(students);
-        })
+    const dbRef = ref(db);
+    get(child(dbRef, '/users'))
+      .then((snapshot) => {
+        var students = [];
+        snapshot.forEach(childSnapshot => {
+          students.push(childSnapshot.val());
+        });
+        addAllItems(students);
+      })
 
   }
 
@@ -37,87 +37,94 @@ export default class Signup extends Component {
     this.setState(state);
   }
   registerUser = () => {
-    if(this.state.email === '' && this.state.password === '') {
-      Alert.alert('Enter details to signup!')
+    if (this.state.email === '' && this.state.password === '' && this.state.displayName === '') {
+      console.log('Enter details to signup!')
+    } else if (!this.state.email.includes('@' && ('.se' || '.com'))) {
+      console.log('Invalid email')
+    } else if (this.state.password === '') {
+      console.log('Password is required!')
+    } else if (this.state.password.length < 6) {
+      console.log('Password is too short, it has to be at least 6 characters.')
+    } else if (this.state.displayName === '') {
+      console.log('Username is required!')
     } else {
       this.setState({
         isLoading: true,
       })
-      
-      createUserWithEmailAndPassword(getAuth(),this.state.email, this.state.password)
-      .then((res) => {
-        updateProfile(res.user,{
-          displayName: this.state.displayName
-        }).then(() => {
+
+      createUserWithEmailAndPassword(getAuth(), this.state.email, this.state.password)
+        .then((res) => {
+          updateProfile(res.user, {
+            displayName: this.state.displayName
+          }).then(() => {
             this.props.model.setUserName(getAuth().currentUser.displayName);
             console.log('User registered successfully!')
-            if(getAuth().currentUser.displayName === null){
-                console.log("username is never set");
+            if (getAuth().currentUser.displayName === null) {
+              console.log("username is never set");
             };
             const db = getDatabase();
             set(ref(db, 'users/' + res.user.uid), {
-                username: res.user.displayName,
-                email: res.user.email,
+              username: res.user.displayName,
+              email: res.user.email,
             });
             console.log("FINISH ADDED USER")
-        });
-        this.setState({
-          isLoading: false,
-          displayName: '',
-          email: '', 
-          password: ''
+          });
+          this.setState({
+            isLoading: false,
+            displayName: '',
+            email: '',
+            password: ''
+          })
         })
-        //this.props.navigation.navigate('Sign-in')
-      })
-      .catch(error => this.setState({ errorMessage: error.message }))      
+        .catch(error => this.setState({ errorMessage: error.message }))
     }
   }
   render() {
-    if(this.state.isLoading){
-      return(
+    if (this.state.isLoading) {
+      return (
         <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#9E9E9E"/>
+          <ActivityIndicator size="large" color="#9E9E9E" />
         </View>
       )
-    }   
-  return (
-    <View style={styles.SignUp}>
+    }
+    return (
+      <View style={styles.SignUp}>
 
         <Text style={styles.header}>Create a new account</Text>
 
-        <TextInput style={styles.textinput} 
-        placeholder="Full name" 
-        value={this.state.displayName}
-        onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+        <TextInput style={styles.textinput}
+          placeholder="Full name"
+          value={this.state.displayName}
+          onChangeText={(val) => this.updateInputVal(val, 'displayName')}
         />
 
         <TextInput style={styles.textinput}
-         placeholder="Email" 
-         value={this.state.email}
-         onChangeText={(val) => this.updateInputVal(val, 'email')}
-         />
+          placeholder="Email"
+          value={this.state.email}
+          onChangeText={(val) => this.updateInputVal(val, 'email')}
+        />
 
         <TextInput style={styles.textinput}
-         placeholder="Password" 
-         secureTextEntry={true} 
-         value={this.state.password}
-         onChangeText={(val) => this.updateInputVal(val, 'password')}
-         />
+          placeholder="Password"
+          secureTextEntry={true}
+          value={this.state.password}
+          onChangeText={(val) => this.updateInputVal(val, 'password')}
+        />
 
         <TouchableOpacity style={styles.button}
-        onPress={() => this.registerUser()}
+          onPress={() => this.registerUser()}
         >
-            <Text style={styles.btntext}>Sign up</Text>
+          <Text style={styles.btntext}>Sign up</Text>
         </TouchableOpacity>
 
-        <Text 
+        <Text
           style={styles.loginText}
           onPress={() => this.props.navigation.navigate('Sign-in')}>
           Already Registered? Click here to sign in
-        </Text>     
-    </View>
-  );
- }
+        </Text>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
@@ -135,33 +142,33 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   header: {
-      fontSize: Platform.OS === 'web' ? 65 : 40,
-      fontWeight: "bold",
-      color: '#000000',
-      paddingBottom: 10,
-      marginBottom: 40,
-      borderBottomColor: '#199187',
-      borderBottomWidth: 1,
+    fontSize: Platform.OS === 'web' ? 65 : 40,
+    fontWeight: "bold",
+    color: '#000000',
+    paddingBottom: 10,
+    marginBottom: 40,
+    borderBottomColor: '#199187',
+    borderBottomWidth: 1,
   },
   textinput: {
-      alignSelf: 'stretch',
-      height: 40,
-      marginBottom: 30,
-      color: '#000000',
-      borderBottomColor: '#f8f8f8',
-      borderBottomWidth: 1,
+    alignSelf: 'stretch',
+    height: 40,
+    marginBottom: 30,
+    color: '#000000',
+    borderBottomColor: '#f8f8f8',
+    borderBottomWidth: 1,
   },
   button: {
-      alignSelf: 'stretch',
-      alignItems: 'center',
-      padding: 20,
-     backgroundColor: '#1e90ff',
-     marginTop: 30,
-     borderRadius: 5,
+    alignSelf: 'stretch',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#1e90ff',
+    marginTop: 30,
+    borderRadius: 5,
   },
   btntext: {
-      color: '#fff',
-      fontWeight: 'bold',
+    color: '#fff',
+    fontWeight: 'bold',
   }
 });
 
