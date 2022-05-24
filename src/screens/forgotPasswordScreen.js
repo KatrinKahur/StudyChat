@@ -26,10 +26,15 @@ export default class ForgotPassword extends Component {
   };
 
   handlePasswordReset = () => {
-    sendPasswordResetEmail(getAuth(), this.state.email).then(() => {
-      console.log("Password reset email sent successfully");
-    });
-    this.props.navigation.navigate("Sign-in");
+    if (this.state.email === '' || !this.state.email.includes('@' && ('.com' || '.se'))) {
+      console.log('Invalid email, enter your registered email.')
+    }
+    else {
+      sendPasswordResetEmail(getAuth(), this.state.email).then(() => {
+        console.log("Password reset email sent successfully");
+      });
+      this.props.navigation.navigate("Sign-in");
+    }
   };
 
   render() {
