@@ -7,7 +7,8 @@ import { getDatabase, ref, set, onValue, child, get } from "firebase/database";
 //import { users, setUsers } from "./chatScreen";
 import VincentChatScreen from "./vincentChatScreen";
 import VincentContactListScreen from "./vincentContactListScreen.js";
-
+import GroupListScreen from "./groupListScreen";
+import GroupChatScreen from "./groupChatScreen";
 export default function MainScreen(props){
     const [userName, setUserName] = React.useState(props.model.userName)
     
@@ -17,7 +18,7 @@ export default function MainScreen(props){
         }else{
             setUserName(props.model.userName);
         }
-    }
+    }20
 
     React.useEffect(() => {
         waitForSetUserName()}, [props.model.userName])
@@ -59,9 +60,9 @@ export default function MainScreen(props){
                 {console.log(userName)}
             </Text>
 
-            <Pressable style = {styles.contactListButton} onPress = {() => {props.navigation.push("Chat")}}>
+            <Pressable style = {styles.contactListButton} onPress = {() => {props.navigation.push("Group Chat List")}}>
                 <Text style ={styles.contactListText}>
-                    chat screen
+                    group chat 
                 </Text>
             </Pressable>
             <Pressable style = {styles.contactListButton} onPress = {() => {props.navigation.push("VincentContactList")}}>
