@@ -23,11 +23,11 @@ import React, { useState, useEffect } from "react";
 import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
 import contactListScreen from "./chatScreen";
 import moment from "moment";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function VincentChatScreen({ navigation, route }) {
 
-    function addMessageToDatabase(to, from, message){
+    function addMessageToDatabase(to, from, message) {
         push(ref(getDatabase(), '/messages'), {
             time: moment()
                 .utcOffset('+02:00')
@@ -38,17 +38,17 @@ export default function VincentChatScreen({ navigation, route }) {
         });
     }
 
-    const[userFrom, setUserFrom] = React.useState(getUser());
-    const[userTo, setUserTo] = React.useState(route.params.targetEmail)
-    const[currentMessage, setCurrentMessage] = React.useState("");
-    const[messageSentStatus, setMessageSentStatus] = React.useState(false);
+    const [userFrom, setUserFrom] = React.useState(getUser());
+    const [userTo, setUserTo] = React.useState(route.params.targetEmail)
+    const [currentMessage, setCurrentMessage] = React.useState("");
+    const [messageSentStatus, setMessageSentStatus] = React.useState(false);
 
 
     console.log(userFrom.email)
     console.log(userTo)
 
     React.useEffect(() => {
-        if(messageSentStatus){
+        if (messageSentStatus) {
             addMessageToDatabase(userTo, userFrom.email, currentMessage)
             setMessageSentStatus(false);
             setCurrentMessage("");
@@ -131,7 +131,7 @@ export default function VincentChatScreen({ navigation, route }) {
 
     //console.log(Array.isArray(messages))
 
-    function sendMessage(){
+    function sendMessage() {
         if (currentMessage !== "") {
             setMessageSentStatus(true)
         }
@@ -169,19 +169,19 @@ export default function VincentChatScreen({ navigation, route }) {
 
             </View>
 
-            {   <View style={{flexDirection: "row", marginLeft: "5%", marginBottom: "5%", marginTop: 10}}>
-                    <TextInput
-                        value={currentMessage}
-                        style={styles.messageContainer}
-                        onChangeText={(message) => setCurrentMessage(message)}
-                        placeholder="Enter a message..." />
-                    <TouchableOpacity
-                        onPress={() => {sendMessage()}}
-                        style={styles.sendButton}
-                    >
-                        <MaterialCommunityIcons name="send" size={30} color="white" />
-                    </TouchableOpacity>
-                </View>
+            {<View style={{ flexDirection: "row", marginLeft: "5%", marginBottom: "5%", marginTop: 10 }}>
+                <TextInput
+                    value={currentMessage}
+                    style={styles.messageContainer}
+                    onChangeText={(message) => setCurrentMessage(message)}
+                    placeholder="Enter a message..." />
+                <TouchableOpacity
+                    onPress={() => { sendMessage() }}
+                    style={styles.sendButton}
+                >
+                    <MaterialCommunityIcons name="send" size={30} color="white" />
+                </TouchableOpacity>
+            </View>
             }
         </>
     )
@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
         borderRadius: 30
     },
     messageContainer: {
-        backgroundColor: Platform.OS === 'web' ? `#add8e6` :`#fffaf0`,
+        backgroundColor: Platform.OS === 'web' ? `#add8e6` : `#fffaf0`,
         paddingVertical: 5,
         paddingHorizontal: 15,
         borderRadius: 20,
@@ -258,17 +258,17 @@ const styles = StyleSheet.create({
         maxHeight: Platform.OS === 'web' ? 100 : 50,
     },
 
-    textstyle:{
+    textstyle: {
         textAlign: "center",
         fontSize: 20,
     },
 
-    textInput:{
+    textInput: {
         minHeight: '15%',
         fontSize: 20,
     },
 
-    sendMessageButton:{
+    sendMessageButton: {
         minHeight: '15%',
     },
 
