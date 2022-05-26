@@ -9,12 +9,10 @@ import { firebaseConfig } from "../config/firebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getReactNativePersistence } from "firebase/auth/react-native";
 import React, { useState, useEffect } from "react";
-import { getDatabase, ref, set, onValue, child, get, onChildAdded } from "firebase/database";
+import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
 import ChatScreen from "./chatScreen";
 // Import Admin SDK
 export default function GroupListScreen({ navigation }) {
-
-
     
   function getUser(){  
     const auth = getAuth();
@@ -71,11 +69,23 @@ export default function GroupListScreen({ navigation }) {
       })
   }
 
+  function writeGroupChatData(id, user){
+    firebase.database().ref('groupChats/' + id).set({
+      users: user
+    });
+  }
 
+  function createGroupChat(user){
+    push(ref(getDatabase(), '/groupChats'), {
+      name: 'placeholder',
+      users: {user}
+  });
+  navigation.navigate('Group Chat Screen', { targetEmail: users.email, targetUsername: users.username })
+  }
 
   return (
    
-    <><Pressable style={styles.startChatButton} onPress={() => { props.navigation.push("Group Chat List"); } }>
+    <><Pressable style={styles.startChatButton} onPress={() => { createGroupChat(getAuth().currentUser.uid); } }>
           <Text style={styles.startChatText}>
               Start new group chat
           </Text>
@@ -83,7 +93,7 @@ export default function GroupListScreen({ navigation }) {
               {users.map((users) => (
 
                   //<View key={users.username} HELLO> HELLO
-                  <Text style={styles.item} key={users.email} onPress={() => navigation.push('Group Chat Screen', { targetEmail: users.email, targetUsername: users.username })}>{users.username}</Text>
+                  <Text style={styles.item} key={users.email} onPress={() => navigation.navigate('Group Chat Screen', { targetEmail: users.email, targetUsername: users.username })}>{users.username}</Text>
                   // </View>
               ))}
 

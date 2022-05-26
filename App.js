@@ -63,7 +63,12 @@ export default function App() {
                                 navigation = {props.navigation}
                                 model = {appModel} />)}
                         />
-                        <Stack.Screen name="Group Chat List" component={GroupListScreen} />
+                        <Stack.Screen 
+                            name="Group Chat List"
+                            children = {(props) => (<GroupListScreen
+                                navigation = {props.navigation}
+                                model = {appModel} />)}
+                        />
                         <Stack.Screen name="Group Chat Screen" component={GroupChatScreen} />
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
                         <Stack.Screen name="VincentContactList" component={VincentContactListScreen} />
