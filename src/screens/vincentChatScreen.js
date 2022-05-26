@@ -202,7 +202,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         paddingHorizontal: 15,
         borderRadius: 20,
-        width: Platform.OS === 'web' ? "50%" : "75%"
+        width: Platform.OS === 'web' ? "50%" : "77%"
     },
     "item": {
         marginTop: 24,
