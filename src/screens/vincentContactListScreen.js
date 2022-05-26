@@ -11,6 +11,8 @@ import { getReactNativePersistence } from "firebase/auth/react-native";
 import React, { useState, useEffect } from "react";
 import { getDatabase, ref, set, onValue, child, get, onChildAdded } from "firebase/database";
 import ChatScreen from "./chatScreen";
+import {FontAwesome} from "@expo/vector-icons";
+import {TouchableOpacity} from "react-native";
 // Import Admin SDK
 export default function VincentContactListScreen({ navigation }) {
 
@@ -71,20 +73,21 @@ export default function VincentContactListScreen({ navigation }) {
 
 
 
-  return (
-   
+    return (
+        <ScrollView>
+            {users.map((users) => (
+                <TouchableOpacity style={styles.item}
+                                  onPress={() => navigation.push('VincentChatScreen',
+                                      {targetEmail: users.email, targetUsername: users.username})}>
+                    <FontAwesome name="user-o" size={Platform.OS === 'web' ? 24 : 32} color="black" />
+                    <Text style={styles.contactText} key={users.email}>
+                        {users.username}
+                    </Text>
+                </TouchableOpacity>
 
-      <ScrollView>
-      {users.map((users) => (
-
-      //<View key={users.username} HELLO> HELLO
-      <Text style={styles.item} key={users.email} onPress={() => navigation.push('VincentChatScreen', {targetEmail: users.email, targetUsername: users.username})}>{users.username}</Text>
-       // </View>
-    ))}
-
-      </ScrollView>
-
-  )
+            ))}
+        </ScrollView>
+    )
       }
  
 const styles = StyleSheet.create({
@@ -95,10 +98,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10
 }, 
   item:{
-    marginTop:24,
-    padding:60,
+    flexDirection: "row",
+    marginTop: 14,
+    padding: 30,
     backgroundColor: 'grey',
-    fontSize: 24
+    borderRadius: 20,
+    marginHorizontal: 10,
+    width: Platform.OS === 'web'? "20%" : "95%",
+    alignSelf: Platform.OS === 'web' ? "center" : "stretch"
+  },
+  contactText:{
+      fontSize: 24,
+      marginLeft: 10
   }
 });
 
