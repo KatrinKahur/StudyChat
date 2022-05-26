@@ -6,7 +6,6 @@ import {
     StatusBar,
     FlatList,
     StyleSheet,
-    ScrollView,
     TextInput,
     TouchableOpacity
 } from "react-native";
@@ -71,7 +70,7 @@ export default function VincentChatScreen({ navigation, route }) {
             .then((snapshot) => {
                 var students = [];
                 snapshot.forEach(childSnapshot => {
-                    students.push(childSnapshot.val());
+                    students = [childSnapshot.val(), ...students];
                 });
                 addAllItems(students);
             })
@@ -114,11 +113,11 @@ export default function VincentChatScreen({ navigation, route }) {
         let array = [];
         array = messages.map(item => {
             if (item.from == currentUser.email && item.to == route.params.targetEmail) {
-                return { color: "green", ...item }
+                return { color: "blue", ...item }
             }
 
             if (item.from == route.params.targetEmail && item.to == currentUser.email) {
-                return { color: "blue", ...item }
+                return { color: "green", ...item }
             }
 
         }).filter(notUndefined => notUndefined !== undefined);
@@ -142,37 +141,25 @@ export default function VincentChatScreen({ navigation, route }) {
 
     return (
         <>
-            <View>
-
+            <View style={styles.chatContainer}>
                 <Text style={styles.textstyle}>{route.params.targetUsername} </Text>
-
-
-
-                <ScrollView style={styles.scrollview}>
-
-                    {filteredMessages.map(items => {
-
-                        if (items.color == "green") {
-                            return <Text style={styles.green} key={items.time + items.color} >{items.message}</Text>
+                <FlatList
+                    inverted
+                    data={filteredMessages}
+                    keyExtractor={(item, index) => item + index}
+                    renderItem={( { item } ) => {
+                        if(item.color === "green"){
+                            return <Text style={styles.green} key={item.time + item.color} >{item.message}</Text>
                         }
-
-                        if (items.color == "blue") {
-                            return <Text style={styles.blue} key={items.time + items.color} >{items.message}</Text>
+                        if(item.color === "blue"){
+                            return <Text style={styles.blue} key={item.time + item.color} >{item.message}</Text>
                         }
-
-                    })}
-
-
-                </ScrollView>
-
-
-
+                    }}/>
             </View>
-
-            {<View style={{ flexDirection: "row", marginLeft: "5%", marginBottom: "5%", marginTop: 10 }}>
+            {<View style={styles.messageContainer}>
                 <TextInput
                     value={currentMessage}
-                    style={styles.messageContainer}
+                    style={styles.messageInputContainer}
                     onChangeText={(message) => setCurrentMessage(message)}
                     placeholder="Enter a message..." />
                 <TouchableOpacity
@@ -195,13 +182,22 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingHorizontal: 10
     },
+    chatContainer: {
+        flex: 1
+    },
+    messageContainer: {
+        flexDirection: "row",
+        marginLeft: "5%",
+        marginBottom: "3%",
+        marginTop: 10
+    },
     sendButton: {
         marginLeft: Platform.OS === 'web' ? "1%" : "2%",
         padding: 8,
         backgroundColor: "black",
         borderRadius: 30
     },
-    messageContainer: {
+    messageInputContainer: {
         backgroundColor: Platform.OS === 'web' ? `#add8e6` : `#fffaf0`,
         paddingVertical: 5,
         paddingHorizontal: 15,
@@ -216,68 +212,41 @@ const styles = StyleSheet.create({
     },
 
     "blue": {
-        /*marginTop:20,
-        padding:20,
-        backgroundColor: 'green',
-        fontSize: 14*/
-
         backgroundColor: "#0078fe",
-        padding: Platform.OS === 'web' ? 10 : 5,
+        padding: 10,
         marginLeft: '45%',
-        borderRadius: 5,
-        //marginBottom: 15,
         marginTop: 5,
         marginRight: Platform.OS === 'web' ? "44%" : "10%",
         maxWidth: '50%',
         alignSelf: 'flex-end',
-        //maxWidth: 500,
-
-        borderRadius: Platform.OS === 'web' ? 20 : 50,
-        maxHeight: Platform.OS === 'web' ? 100 : 50,
-
-
+        borderRadius: 20,
     },
 
     "green": {
-        /*marginTop:20,
-        padding:20,
-        backgroundColor: 'blue',
-        fontSize: 14*/
         backgroundColor: "#dedede",
         padding: 10,
         marginTop: 5,
         marginLeft: "5%",
         maxWidth: '50%',
         alignSelf: 'flex-start',
-        //maxWidth: 500,
-        //padding: 14,
-
-        //alignItems:"center",
-        borderRadius: Platform.OS === 'web' ? 20 : 90,
-
-        maxHeight: Platform.OS === 'web' ? 100 : 50,
+        borderRadius: 20
     },
 
     textstyle: {
-        textAlign: "center",
+        textAlign: Platform.OS === "web" ? "left" : "center",
+        marginLeft: Platform.OS === "web" ? "25%" : "0%",
         fontSize: 20,
+        marginVertical: 10
     },
 
     textInput: {
         minHeight: '15%',
         fontSize: 20,
+        fontWeight: "bold"
     },
 
     sendMessageButton: {
         minHeight: '15%',
-    },
-
-    scrollView: {
-
-        maxHeight: '70%',
-
     }
-
-
 
 });
