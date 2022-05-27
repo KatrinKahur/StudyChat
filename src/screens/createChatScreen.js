@@ -79,7 +79,14 @@ export default class extends Component {
         >
             <Text style={styles.btntext}>Create</Text>
         </TouchableOpacity>
-        
+
+      <ScrollView>
+        {users.map((users) => (
+      //<View key={users.username} HELLO> HELLO
+          <Text style={styles.btntext} key={users.username} onPress={() => push(ref(getDatabase(), '/groupChats' + {route.params.targetName} + '/users') { user: {key}})} />
+       //</View>
+      ))}
+</ScrollView>   
         
     </View>
   );
