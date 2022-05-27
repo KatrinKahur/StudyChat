@@ -11,6 +11,7 @@ import { getReactNativePersistence } from "firebase/auth/react-native";
 import React, { useState, useEffect } from "react";
 import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
 import ChatScreen from "./chatScreen";
+import reateChatScreen from "./createChatScreen";
 // Import Admin SDK
 export default function GroupListScreen({ navigation }) {
     
@@ -27,7 +28,7 @@ export default function GroupListScreen({ navigation }) {
     GetAllDataOnce();
 
     const db = getDatabase();
-    const updatedRef = ref(db, 'users/');
+    const updatedRef = ref(db, 'groupChats/');
     onChildAdded(updatedRef, (data) => {
         console.log("UPDATED VALUE FOUND")
         GetAllDataOnce();
@@ -41,7 +42,7 @@ export default function GroupListScreen({ navigation }) {
   const [userData, setuserData] = useState();
   const [users, setUsers] = React.useState([]);  
   const [newArray, setnewArray] = useState([]);
-
+  const [groupChats, setgroupChats] = React.useState([]); 
 
   function writeUserData(userId, name, email, imageUrl) {
     const db = getDatabase();
@@ -53,19 +54,19 @@ export default function GroupListScreen({ navigation }) {
   }
 
   function addAllItems(data) {
-    setUsers(data);
+    setgroupChats(data);
   }
   const db = getDatabase();
 
   function GetAllDataOnce() {
     const dbRef = ref(db);
-    get(child(dbRef, '/users'))
+    get(child(dbRef, '/groupChats'))
       .then((snapshot) => {
-        var students = [];
+        var chats = [];
         snapshot.forEach(childSnapshot => {
-          students.push(childSnapshot.val());
+          chats.push(childSnapshot.val());
         });
-        addAllItems(students);
+        addAllItems(chats);
       })
   }
 
@@ -75,28 +76,23 @@ export default function GroupListScreen({ navigation }) {
     });
   }
 
-  function createGroupChat(user){
-    push(ref(getDatabase(), '/groupChats'), {
-      name: 'placeholder',
-      users: {user}
-  });
-  navigation.navigate('Group Chat Screen', { targetEmail: users.email, targetUsername: users.username })
-  }
+
 
   return (
    
-    <><Pressable style={styles.startChatButton} onPress={() => { createGroupChat(getAuth().currentUser.uid); } }>
+    <><Pressable style={styles.startChatButton} onPress={() => { navigation.navigate('Create Chat Screen')}}>
           <Text style={styles.startChatText}>
               Start new group chat
           </Text>
-      </Pressable><ScrollView>
-              {users.map((users) => (
+      </Pressable> <ScrollView>
+
+           {groupChats.map((groupChats) => (
 
                   //<View key={users.username} HELLO> HELLO
-                  <Text style={styles.item} key={users.email} onPress={() => navigation.navigate('Group Chat Screen', { targetEmail: users.email, targetUsername: users.username })}>{users.username}</Text>
+                  <Text style={styles.item} key={groupChats.name} onPress={() => navigation.navigate('Group Chat Screen', { targetName: groupChats.name})}>{groupChats.name}</Text>
                   // </View>
               ))}
-
+      
           </ScrollView></>
 
   )

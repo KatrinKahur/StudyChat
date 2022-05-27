@@ -18,7 +18,8 @@ import ContactListScreen from "./src/screens/contactListScreen";
 import VincentChatScreen from "./src/screens/vincentChatScreen";
 import VincentContactListScreen from "./src/screens/vincentContactListScreen";
 import GroupListScreen from "./src/screens/groupListScreen";
-import GroupChatScreen from "./src/screens/groupListScreen";
+import GroupChatScreen from "./src/screens/groupChatScreen";
+import CreateChatScreen from "./src/screens/createChatScreen";
 import AppModel from "./src/appModel";
 
 const appModel = new AppModel();
@@ -73,6 +74,7 @@ export default function App() {
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
                         <Stack.Screen name="VincentContactList" component={VincentContactListScreen} />
                         <Stack.Screen name="VincentChatScreen" component={VincentChatScreen} />
+                        <Stack.Screen name="Create Chat Screen" component={CreateChatScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
                 (

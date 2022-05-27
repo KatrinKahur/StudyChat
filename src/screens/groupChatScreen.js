@@ -21,11 +21,11 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getReactNativePersistence } from "firebase/auth/react-native";
 import React, { useState, useEffect } from "react";
 import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
-import groupListScreen from "./chatScreen";
+import contactListScreen from "./chatScreen";
 import moment from "moment";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 
-export default function GroupChatScreen({ navigation, route }) {
+export default function VincentChatScreen({ navigation, route }) {
 
     function addMessageToDatabase(to, from, message){
         push(ref(getDatabase(), '/messages'), {
@@ -164,6 +164,7 @@ export default function GroupChatScreen({ navigation, route }) {
 
 
                 </ScrollView>
+
 
 
 
