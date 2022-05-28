@@ -11,37 +11,29 @@ import { getReactNativePersistence } from "firebase/auth/react-native";
 import React, { useState, useEffect } from "react";
 import { getDatabase, ref, set, onValue, child, get, onChildAdded } from "firebase/database";
 import ChatScreen from "./chatScreen";
-// Import Admin SDK
 export default function VincentContactListScreen({ navigation }) {
+  const db = getDatabase();
+
+  const [userData, setuserData] = useState();
+  const [users, setUsers] = React.useState([]);  
+  const [newArray, setnewArray] = useState([]);
+
+ useEffect(() => {
+    let userdata = getUser()
+    setuserData(userdata)
+    GetAllDataOnce();
+    const db = getDatabase();
+    const updatedRef = ref(db, 'users/');
+    onChildAdded(updatedRef, (data) => {
+        GetAllDataOnce();
+    });
+  }, []);
 
   function getUser(){
     const auth = getAuth();
     const userdata = auth.currentUser;
    return userdata
   }
-
-
- useEffect(() => {
-    let userdata = getUser()
-    setuserData(userdata)
-    GetAllDataOnce();
-
-    const db = getDatabase();
-    const updatedRef = ref(db, 'users/');
-    onChildAdded(updatedRef, (data) => {
-        console.log("UPDATED VALUE FOUND")
-        GetAllDataOnce();
-    });
-
-
-  }, []);
-
-  
-
-  const [userData, setuserData] = useState();
-  const [users, setUsers] = React.useState([]);  
-  const [newArray, setnewArray] = useState([]);
-
 
   function writeUserData(userId, name, email, imageUrl) {
     const db = getDatabase();
@@ -55,8 +47,7 @@ export default function VincentContactListScreen({ navigation }) {
   function addAllItems(data) {
     setUsers(data);
   }
-  const db = getDatabase();
-
+ 
   function GetAllDataOnce() {
     const dbRef = ref(db);
     get(child(dbRef, '/users'))
@@ -69,36 +60,31 @@ export default function VincentContactListScreen({ navigation }) {
       })
   }
 
-
-
   return (
-   
-
-      <ScrollView>
-      {users.map((users) => (
-
-      //<View key={users.username} HELLO> HELLO
-      <Text style={styles.item} key={users.email} onPress={() => navigation.push('VincentChatScreen', {targetEmail: users.email, targetUsername: users.username})}>{users.username}</Text>
-       // </View>
-    ))}
-
-      </ScrollView>
-
-  )
+          <ScrollView>
+          {users.map((users) => (
+          <Text style={styles.item} key={users.email} 
+            onPress={() => navigation.push('VincentChatScreen', 
+            {targetEmail: users.email, targetUsername: users.username})}>
+              {users.username}
+            </Text>
+        ))}
+          </ScrollView>
+      )
       }
  
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: 20,
     paddingHorizontal: 10
-}, 
+  }, 
   item:{
     marginTop:24,
     padding:60,
     backgroundColor: 'grey',
     fontSize: 24
-  }
-});
+   }
+  });
 
