@@ -42,6 +42,9 @@ export default function VincentChatScreen({ navigation, route }) {
     const[userTo, setUserTo] = React.useState(route.params.targetEmail)
     const[currentMessage, setCurrentMessage] = React.useState("");
     const[messageSentStatus, setMessageSentStatus] = React.useState(false);
+    const [userData, setuserData] = useState();
+    const [users, setUsers] = React.useState([]);  
+    const [newArray, setnewArray] = useState([]);
 
 
     console.log(userFrom.email)
@@ -65,27 +68,45 @@ export default function VincentChatScreen({ navigation, route }) {
         setMessages(data);
     }
 
-    function GetAllDataOnce() {
+    function GetMessageDataOnce() {
         const dbRef = ref(db);
         get(child(dbRef, 'messages/'))
             .then((snapshot) => {
-                var students = [];
+                var messages = [];
                 snapshot.forEach(childSnapshot => {
-                    students.push(childSnapshot.val());
+                    messages.push(childSnapshot.val());
                 });
-                addAllItems(students);
+                addAllItems(messages);
             })
     }
 
+    function GetUserDataOnce() {
+        const dbRef = ref(db);
+        get(child(dbRef, '/users'))
+          .then((snapshot) => {
+            var students = [];
+            snapshot.forEach(childSnapshot => {
+              students.push(childSnapshot.val());
+            });
+            addAllItems(students);
+          })
+      }
 
     useEffect(() => {
 
-        GetAllDataOnce();
+        GetMessageDataOnce();
         const db = getDatabase();
-        const updatedRef = ref(db, 'messages/');
-        onChildAdded(updatedRef, (data) => {
+        const updatedMessages = ref(db, 'messages/');
+        onChildAdded(updatedMessages, (data) => {
             console.log("UPDATED VALUE FOUND")
-            GetAllDataOnce();
+            GetMessageDataOnce();
+        });
+
+        GetUserDataOnce();
+        const updatedUsers = ref(db, 'messages/');
+        onChildAdded(updatedUsers, (data) => {
+            console.log("UPDATED VALUE FOUND")
+            GetUserDataOnce();
         });
 
     }, []);
@@ -139,6 +160,8 @@ export default function VincentChatScreen({ navigation, route }) {
 
     }
 
+    //console.log('users:')
+    //console.log(users.map(users.username))
 
     return (
         <>
@@ -148,7 +171,7 @@ export default function VincentChatScreen({ navigation, route }) {
 
 
 
-                <ScrollView style={styles.scrollview}>
+                <ScrollView style={styles.rightScrollview}>
 
                     {filteredMessages.map(items => {
 
@@ -184,6 +207,17 @@ export default function VincentChatScreen({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             }
+
+            <View><ScrollView style={styles.leftScrollview}>
+                {users.map(() => (
+                    //<View key={users.username} HELLO> HELLO
+                    <Text style={styles.btntext} key={users.username} onPress={() => push(ref(getDatabase(), '/groupChats' + route.params.targetName + '/users'))}>
+                        {/*users.username*/},
+                        {console.log('testing')}
+                    </Text>
+                //</View>
+                ))}
+            </ScrollView></View>
         </>
     )
 }
@@ -273,9 +307,15 @@ const styles = StyleSheet.create({
         minHeight: '15%',
     },
 
-    scrollView: {
+    leftScrollView: {
+        alignSelf: 'left',
+        maxHeight: '40%',
 
-        maxHeight: '70%',
+    },
+
+    rightScrollView: {
+        alignSelf: 'right',
+        maxHeight: '40%',
 
     }
 
