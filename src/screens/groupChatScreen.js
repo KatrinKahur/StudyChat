@@ -209,7 +209,7 @@ export default function VincentChatScreen({ navigation, route }) {
             }
 
             <View><ScrollView style={styles.leftScrollview}>
-                {users.map(() => (
+                {users.map((users) => (
                     //<View key={users.username} HELLO> HELLO
                     <Text style={styles.btntext} key={users.username} onPress={() => push(ref(getDatabase(), '/groupChats' + route.params.targetName + '/users'))}>
                         {/*users.username*/},
