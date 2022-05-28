@@ -80,7 +80,7 @@ export default function VincentContactListScreen({ navigation }) {
                                   onPress={() => navigation.push('VincentChatScreen',
                                       {targetEmail: users.email, targetUsername: users.username})}>
                     <FontAwesome name="user-o" size={Platform.OS === 'web' ? 24 : 32} color="black" />
-                    <Text style={styles.contactText} key={users.email}>
+                    <Text style={styles.contactText} key={users.email + users.username}>
                         {users.username}
                     </Text>
                 </TouchableOpacity>

@@ -160,12 +160,14 @@ export default function VincentChatScreen({ navigation, route }) {
                 <TextInput
                     value={currentMessage}
                     style={styles.messageInputContainer}
+                    onSubmitEditing={() => {sendMessage()}}
                     onChangeText={(message) => setCurrentMessage(message)}
-                    placeholder="Enter a message..." />
+                    placeholder="Enter a message..." /> 
                 <TouchableOpacity
                     onPress={() => { sendMessage() }}
                     style={styles.sendButton}
                 >
+                    
                     <MaterialCommunityIcons name="send" size={30} color="white" />
                 </TouchableOpacity>
             </View>
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     },
 
     "blue": {
-        backgroundColor: "#0078fe",
+        backgroundColor: "#dedede",
         padding: 10,
         marginLeft: '45%',
         marginTop: 5,
@@ -223,7 +225,7 @@ const styles = StyleSheet.create({
     },
 
     "green": {
-        backgroundColor: "#dedede",
+        backgroundColor: "#0078fe",
         padding: 10,
         marginTop: 5,
         marginLeft: "5%",
