@@ -135,11 +135,11 @@ export default function VincentChatScreen({ navigation, route }) {
     function getMessages() {
         let array = [];
         array = messages.map(item => {
-            if (item.from == currentUser.email && item.to == route.params.targetname) {
+            if (item.from == currentUser.email && item.to == route.params.targetName) {
                 return { color: "green", ...item }
             }
 
-            if (item.from == route.params.targetName && item.to == currentUser.email) {
+            else if (item.to == route.params.targetName) {
                 return { color: "blue", ...item }
             }
 
