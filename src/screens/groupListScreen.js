@@ -106,20 +106,21 @@ export default function GroupListScreen({ navigation }) {
               console.log('4: ' + child.val().user4)
               console.log('5: ' + child.val().user5)
               console.log('6: ' + child.val().user6)
+              console.log('email: ' + getAuth().currentUser.email)
               if(child.val().user1 === getAuth().currentUser.email)
-                navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})
-                if(child.val().user1 === getAuth().currentUser.email)
-                  navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})
-                else if(child.val().user2 === getAuth().currentUser.email)
-                  navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})
-                else if(child.val().user3 === getAuth().currentUser.email)
-                  navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})
-                else if(child.val().user4 === getAuth().currentUser.email)
-                  navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})
-                else if(child.val().user5 === getAuth().currentUser.email)
-                  navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})
-                else if(child.val().user6 === getAuth().currentUser.email)
-                  navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})
+                {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
+              if(child.val().user1 === getAuth().currentUser.email)
+                {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
+              else if(child.val().user2 === getAuth().currentUser.email)
+                {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
+              else if(child.val().user3 === getAuth().currentUser.email)
+                {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
+              else if(child.val().user4 === getAuth().currentUser.email)
+                {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
+              else if(child.val().user5 === getAuth().currentUser.email)
+                {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
+              else if(child.val().user6 === getAuth().currentUser.email)
+                {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
           //      else
           //        console.log('email: ' + getAuth().currentUser.email)
             })
