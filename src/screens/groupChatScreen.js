@@ -8,7 +8,8 @@ import {
     StyleSheet,
     ScrollView,
     TextInput,
-    TouchableOpacity
+    TouchableOpacity,
+    Pressable
 } from "react-native";
 import AuthUser from "../external/authUser";
 import MainScreen from "./mainScreen";
@@ -20,7 +21,7 @@ import { firebaseConfig } from "../config/firebaseConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getReactNativePersistence } from "firebase/auth/react-native";
 import React, { useState, useEffect } from "react";
-import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
+import { getDatabase, ref, set, onValue, child, get, onChildAdded, push, update } from "firebase/database";
 import contactListScreen from "./chatScreen";
 import moment from "moment";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
@@ -39,7 +40,7 @@ export default function VincentChatScreen({ navigation, route }) {
     }
 
     const[userFrom, setUserFrom] = React.useState(getUser());
-    const[userTo, setUserTo] = React.useState(route.params.targetEmail)
+    const[chatTo, setchatTo] = React.useState(route.params.targetName)
     const[currentMessage, setCurrentMessage] = React.useState("");
     const[messageSentStatus, setMessageSentStatus] = React.useState(false);
     const [userData, setuserData] = useState();
@@ -48,11 +49,11 @@ export default function VincentChatScreen({ navigation, route }) {
 
 
     console.log(userFrom.email)
-    console.log(userTo)
+    console.log(chatTo)
 
     React.useEffect(() => {
         if(messageSentStatus){
-            addMessageToDatabase(userTo, userFrom.email, currentMessage)
+            addMessageToDatabase(chatTo, userFrom.email, currentMessage)
             setMessageSentStatus(false);
             setCurrentMessage("");
         }
@@ -64,9 +65,9 @@ export default function VincentChatScreen({ navigation, route }) {
 
     const db = getDatabase();
 
-    function addAllItems(data) {
+ /*   function addAllItems(data) {
         setMessages(data);
-    }
+    }*/
 
     function GetMessageDataOnce() {
         const dbRef = ref(db);
@@ -76,7 +77,7 @@ export default function VincentChatScreen({ navigation, route }) {
                 snapshot.forEach(childSnapshot => {
                     messages.push(childSnapshot.val());
                 });
-                addAllItems(messages);
+                setMessages(messages);
             })
     }
 
@@ -88,7 +89,7 @@ export default function VincentChatScreen({ navigation, route }) {
             snapshot.forEach(childSnapshot => {
               students.push(childSnapshot.val());
             });
-            addAllItems(students);
+            setUsers(students);
           })
       }
 
@@ -103,7 +104,7 @@ export default function VincentChatScreen({ navigation, route }) {
         });
 
         GetUserDataOnce();
-        const updatedUsers = ref(db, 'messages/');
+        const updatedUsers = ref(db, 'users/');
         onChildAdded(updatedUsers, (data) => {
             console.log("UPDATED VALUE FOUND")
             GetUserDataOnce();
@@ -134,11 +135,11 @@ export default function VincentChatScreen({ navigation, route }) {
     function getMessages() {
         let array = [];
         array = messages.map(item => {
-            if (item.from == currentUser.email && item.to == route.params.targetEmail) {
+            if (item.from == currentUser.email && item.to == route.params.targetname) {
                 return { color: "green", ...item }
             }
 
-            if (item.from == route.params.targetEmail && item.to == currentUser.email) {
+            if (item.from == route.params.targetName && item.to == currentUser.email) {
                 return { color: "blue", ...item }
             }
 
@@ -160,8 +161,19 @@ export default function VincentChatScreen({ navigation, route }) {
 
     }
 
-    //console.log('users:')
+    console.log('current user:' + getAuth().currentUser.uid)
+    console.log('users:' + users)
+    console.log('chat:' + route.params.targetChat)
+    console.log('chat name:' + route.params.targetName)
+    console.log('checking:' + ref(db, 'groupChats'))
     //console.log(users.map(users.username))
+    //set(ref(db, ('testing'), {test: '1123'}))
+    //console.log('testing:' + firebase.database().ref( 'users').val())
+    /*get(child(ref(db, 'groupChats')).then((snapshot) => {
+        snapshot.forEach( (childSnapshot) => {
+            console.log('checking:' + childSnapshot)
+        })
+    }))*/
 
     return (
         <>
@@ -210,12 +222,35 @@ export default function VincentChatScreen({ navigation, route }) {
 
             <View><ScrollView style={styles.leftScrollview}>
                 {users.map((users) => (
-                    //<View key={users.username} HELLO> HELLO
-                    <Text style={styles.btntext} key={users.username} onPress={() => push(ref(getDatabase(), '/groupChats' + route.params.targetName + '/users'))}>
-                        {/*users.username*/},
-                        {console.log('testing')}
-                    </Text>
-                //</View>
+                    //<Pressable style={styles.contactListButton} key={users.email} onPress={() => push(ref(getDatabase(), '/groupChats/' + route.params.targetChat + '/users/'), users.uid)}>
+                    <Pressable style={styles.contactListButton} key={users.key} onPress={() =>
+                    get(ref(db, 'groupChats')).then((snapshot) => {
+                        snapshot.forEach((child) => {
+                            if(child.val().name === route.params.targetName)
+                                {get(ref(db, 'groupChats/' + child.key)).then((snapshot) => {
+                                    if(snapshot.val().user2 === '')
+                                        {update(ref(getDatabase(), 'groupChats/' + child.key ), {user2: users.email})}
+                                    else if(snapshot.val().user3 === '')
+                                        {update(ref(getDatabase(), 'groupChats/' + child.key ), {user3: users.email})}
+                                    else if(snapshot.val().user4 === '')
+                                        {update(ref(getDatabase(), 'groupChats/' + child.key ), {user4: users.email})}
+                                    else if(snapshot.val().user5 === '')
+                                        {update(ref(getDatabase(), 'groupChats/' + child.key ), {user5: users.email})}
+                                    else if(snapshot.val().user6 === '')
+                                        {update(ref(getDatabase(), 'groupChats/' + child.key ), {user6: users.email})}
+                                    else
+                                        {get(ref(db, 'groupChats/' + child.key)).then((snapshot) => {
+                                            if (snapshot.exists()) {
+                                              console.log(snapshot.val());
+                                            }
+                                        })}
+                                    })}
+                        })
+                    })}>
+                        <Text style={styles.btntext}>
+                            {users.username},
+                        </Text>
+                    </Pressable>
                 ))}
             </ScrollView></View>
         </>
@@ -317,8 +352,16 @@ const styles = StyleSheet.create({
         alignSelf: 'right',
         maxHeight: '40%',
 
-    }
-
-
-
+    },
+    contactListButton: {
+        justifyContent: "center",
+        alignSelf: "center",
+        display: "flex",
+        width: Platform.OS === 'web' ? "15%" : "30%",
+        height: Platform.OS === 'web' ? 40 : 25,
+        flexDirection: "row",
+        backgroundColor: "brown",
+        margin: 5,
+        marginTop: 10
+      }
 });

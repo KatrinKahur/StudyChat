@@ -5,12 +5,12 @@ import { getReactNativePersistence } from "firebase/auth/react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { Component } from 'react';
 import MainScreen from "./mainScreen";
-import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform, Array} from 'react-native';
 import { TextInput } from 'react-native';
 import { NavigationContainer, Route } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
-import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
+import { getDatabase, ref, set, onValue, child, get, onChildAdded, push, update } from "firebase/database";
 
 export default class extends Component {
   constructor() {
@@ -28,7 +28,7 @@ export default class extends Component {
   };
 
 
-  retrieveData = () => {
+  /*retrieveData = () => {
 
       const dbRef = ref(db);
       get(child(dbRef, '/users'))
@@ -41,16 +41,29 @@ export default class extends Component {
         })
 
 
-  }
+  }*/
 
- 
   createGroupChat(user){
-    push(ref(getDatabase(), '/groupChats'), {
+    push(ref(getDatabase(), '/groupChats/'), {
       name: this.state['chatName'],
-      users: {user}
-  });
-  this.props.navigation.navigate('Group Chat List');
- 
+      user1: user,
+      user2: '',
+      user3: '',
+      user4: '',
+      user5: '',
+      user6: ''
+    });
+
+    /*get(ref(getDatabase(), 'groupChats')).then((snapshot) => {
+      snapshot.forEach((child) => {
+          if (child.val().name === this.state['chatName']) {
+              update(ref(getDatabase(), 'groupChats/' + child.key) + '/users', {user})
+          }
+      })
+    });*/
+
+  
+    this.props.navigation.navigate('Group Chat List');
   }
  
   render() {
@@ -74,8 +87,7 @@ export default class extends Component {
 
 
         <TouchableOpacity style={styles.button}
-        onPress={() => this.createGroupChat(getAuth().currentUser.uid)}
-
+        onPress={() => this.createGroupChat(getAuth().currentUser.email)}
         >
             <Text style={styles.btntext}>Create</Text>
         </TouchableOpacity>
