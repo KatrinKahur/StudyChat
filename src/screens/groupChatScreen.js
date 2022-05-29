@@ -54,6 +54,7 @@ export default function VincentChatScreen({ navigation, route }) {
     React.useEffect(() => {
         if(messageSentStatus){
             addMessageToDatabase(chatTo, userFrom.email, currentMessage)
+            addMessageToDatabase(chatTo, userFrom.email, userFrom.displayName)
             setMessageSentStatus(false);
             setCurrentMessage("");
         }
