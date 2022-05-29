@@ -179,7 +179,7 @@ export default function VincentChatScreen({ navigation, route }) {
         <>
             <View>
 
-                <Text style={styles.textstyle}>{route.params.targetUsername} </Text>
+                <Text style={styles.textstyle}>{route.params.targetName} </Text>
 
 
 
