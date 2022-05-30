@@ -22,6 +22,7 @@ import GroupChatScreen from "./src/screens/groupChatScreen";
 import CreateChatScreen from "./src/screens/createChatScreen";
 import AppModel from "./src/appModel";
 
+
 const appModel = new AppModel();
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
     }, []);
 
     return (
+        
         <NavigationContainer>
             {isSignedIn ?
                 (
@@ -98,5 +100,6 @@ export default function App() {
                     )
             }
         </NavigationContainer>
+        
     );
 }

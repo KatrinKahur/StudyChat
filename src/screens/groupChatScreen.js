@@ -9,7 +9,8 @@ import {
     ScrollView,
     TextInput,
     TouchableOpacity,
-    Pressable
+    Pressable,
+    Image
 } from "react-native";
 import AuthUser from "../external/authUser";
 import MainScreen from "./mainScreen";
@@ -25,7 +26,6 @@ import { getDatabase, ref, set, onValue, child, get, onChildAdded, push, update 
 import contactListScreen from "./chatScreen";
 import moment from "moment";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-
 export default function VincentChatScreen({ navigation, route }) {
 
     function addMessageToDatabase(to, from, message){
@@ -42,10 +42,35 @@ export default function VincentChatScreen({ navigation, route }) {
     const[userFrom, setUserFrom] = React.useState(getUser());
     const[chatTo, setchatTo] = React.useState(route.params.targetName)
     const[currentMessage, setCurrentMessage] = React.useState("");
+    const[currentGif, setCurrentGif] = React.useState("");
     const[messageSentStatus, setMessageSentStatus] = React.useState(false);
     const [userData, setuserData] = useState();
     const [users, setUsers] = React.useState([]);  
     const [newArray, setnewArray] = useState([]);
+    const [gifs, setGifs] = useState([]);
+    const [term, updateTerm] = useState('');
+
+
+    async function fetchGifs() {
+        try {
+            const API_KEY = 'Lkc5E7zYDdeWKrt5xLxn7Um0xdDA7YCO';
+            const BASE_URL = 'http://api.giphy.com/v1/gifs/search';
+            const resJson = await fetch(`${BASE_URL}?api_key=${API_KEY}&q=${term}`);
+            const res = await resJson.json();
+            setGifs(res.data);
+        } catch (error) {
+            console.warn(error);
+        }
+    }
+    function onEdit(newTerm) {
+        updateTerm(newTerm);
+        fetchGifs();
+      }
+    
+     
+
+    
+
 
 
     console.log(userFrom.email)
@@ -57,6 +82,7 @@ export default function VincentChatScreen({ navigation, route }) {
             addMessageToDatabase(chatTo, userFrom.email, userFrom.displayName)
             setMessageSentStatus(false);
             setCurrentMessage("");
+            setCurrentGif("");
         }
     }, [messageSentStatus])
 
@@ -158,8 +184,9 @@ export default function VincentChatScreen({ navigation, route }) {
         if (currentMessage !== "") {
             setMessageSentStatus(true)
         }
-
-
+      /*  if (currentMessage = gifs) {
+            setMessageSentStatus(true)
+        }*/
     }
 
     console.log('current user:' + getAuth().currentUser.uid)
@@ -204,7 +231,7 @@ export default function VincentChatScreen({ navigation, route }) {
 
 
 
-            </View>
+           
 
             {   <View style={{flexDirection: "row", marginLeft: "5%", marginBottom: "5%", marginTop: 10}}>
                     <TextInput
@@ -220,7 +247,35 @@ export default function VincentChatScreen({ navigation, route }) {
                     </TouchableOpacity>
                 </View>
             }
-
+ </View>
+            <View style={styles.view}>
+            <Button title="Get GIPHY" onPress={() => {fetchGifs()}}/>
+          <TextInput
+          
+            placeholder="Search Giphy"
+            placeholderTextColor='#fff'
+            style={styles.textInput2}
+            onChangeText={(text) => onEdit(text)}
+          />
+          
+          <FlatList
+            data={gifs}
+            renderItem={({item}) => (
+                <TouchableOpacity
+                    onPress={() => {sendMessage()}}
+            
+                    > <Image
+                    resizeMode='contain'
+                    style={styles.image}
+                    source={{uri: item.images.original.url}}
+                />
+                        
+                    </TouchableOpacity> 
+                   
+               
+            )}
+          />
+        </View>
             <View><ScrollView style={styles.leftScrollview}>
                 {users.map((users) => (
                     //<Pressable style={styles.contactListButton} key={users.email} onPress={() => push(ref(getDatabase(), '/groupChats/' + route.params.targetChat + '/users/'), users.uid)}>
@@ -260,11 +315,23 @@ export default function VincentChatScreen({ navigation, route }) {
 
 
 const styles = StyleSheet.create({
+    textInput:{
+        width: '100%',
+        height: 10,
+        color: 'pink'
+    },
+      image: {
+        width: 300,
+        height: 150,
+        borderWidth: 3,
+        marginBottom: 5
+      },
+
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        paddingTop: 20,
-        paddingHorizontal: 10
+        paddingTop: 10,
+        paddingHorizontal: 5
     },
     sendButton: {
         marginLeft: Platform.OS === 'web' ? "1%" : "2%",
@@ -276,7 +343,7 @@ const styles = StyleSheet.create({
         backgroundColor: Platform.OS === 'web' ? `#add8e6` :`#fffaf0`,
         paddingVertical: 5,
         paddingHorizontal: 15,
-        borderRadius: 20,
+        borderRadius: 10,
         width: Platform.OS === 'web' ? "50%" : "75%"
     },
     "item": {
