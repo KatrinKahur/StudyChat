@@ -1,17 +1,4 @@
-import {
-    View,
-    Button,
-    Platform,
-    Text,
-    StatusBar,
-    FlatList,
-    StyleSheet,
-    ScrollView,
-    TextInput,
-    TouchableOpacity,
-    Pressable,
-    Image
-} from "react-native";
+import {View, Button, Platform, Text, StatusBar, FlatList, StyleSheet, ScrollView, TextInput, TouchableOpacity, Pressable, Image } from "react-native";
 import AuthUser from "../external/authUser";
 import MainScreen from "./mainScreen";
 import { NavigationContainer, Route } from '@react-navigation/native';
@@ -248,7 +235,8 @@ export default function VincentChatScreen({ navigation, route }) {
                 </View>
             }
  </View>
-            <View style={styles.view}>
+            {/*Ramins kod*/}
+            {/*<View style={styles.view}>
             <Button title="Get GIPHY" onPress={() => {fetchGifs()}}/>
           <TextInput
           
@@ -275,7 +263,7 @@ export default function VincentChatScreen({ navigation, route }) {
                
             )}
           />
-        </View>
+        </View>*/}
             <View><ScrollView style={styles.leftScrollview}>
                 {users.map((users) => (
                     //<Pressable style={styles.contactListButton} key={users.email} onPress={() => push(ref(getDatabase(), '/groupChats/' + route.params.targetChat + '/users/'), users.uid)}>

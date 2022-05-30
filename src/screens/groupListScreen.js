@@ -88,13 +88,6 @@ export default function GroupListScreen({ navigation }) {
       {groupChats.map((groupChats) => (
         <Text style={styles.item} key={groupChats.key} onPress={() => 
           get(ref(db, 'groupChats')).then((snapshot) => {
-            /*console.log('key: groupChats/' + groupChats.key)
-            console.log('1: ' + snapshot.val().user1)
-            console.log('2: ' + snapshot.val().user2)
-            console.log('3: ' + snapshot.val().user3)
-            console.log('4: ' + snapshot.val().user4)
-            console.log('5: ' + snapshot.val().user5)
-            console.log('6: ' + snapshot.val().user6)*/
             snapshot.forEach((child) => {
               console.log('key: groupChats/' + child.key)
               console.log('name: ' + child.name)
@@ -121,8 +114,6 @@ export default function GroupListScreen({ navigation }) {
                 {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
               else if(child.val().user6 === getAuth().currentUser.email)
                 {navigation.navigate('Group Chat Screen', { targetName: groupChats.name, targetChat: groupChats.uid})}
-          //      else
-          //        console.log('email: ' + getAuth().currentUser.email)
             })
           })
         }>
