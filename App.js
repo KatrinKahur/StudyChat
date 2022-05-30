@@ -17,8 +17,11 @@ import ChatScreen from "./src/screens/chatScreen";
 import ContactListScreen from "./src/screens/contactListScreen";
 import VincentChatScreen from "./src/screens/vincentChatScreen";
 import VincentContactListScreen from "./src/screens/vincentContactListScreen";
-
+import GroupListScreen from "./src/screens/groupListScreen";
+import GroupChatScreen from "./src/screens/groupChatScreen";
+import CreateChatScreen from "./src/screens/createChatScreen";
 import AppModel from "./src/appModel";
+
 
 const appModel = new AppModel();
 
@@ -52,6 +55,7 @@ export default function App() {
     }, []);
 
     return (
+        
         <NavigationContainer>
             {isSignedIn ?
                 (
@@ -62,10 +66,17 @@ export default function App() {
                                 navigation = {props.navigation}
                                 model = {appModel} />)}
                         />
-                        <Stack.Screen name="Chat" component={ChatScreen} />
+                        <Stack.Screen 
+                            name="Group Chat List"
+                            children = {(props) => (<GroupListScreen
+                                navigation = {props.navigation}
+                                model = {appModel} />)}
+                        />
+                        <Stack.Screen name="Group Chat Screen" component={GroupChatScreen} />
                         <Stack.Screen name="Contact list" component={ContactListScreen} />
                         <Stack.Screen name="VincentContactList" component={VincentContactListScreen} />
                         <Stack.Screen name="VincentChatScreen" component={VincentChatScreen} />
+                        <Stack.Screen name="Create Chat Screen" component={CreateChatScreen} />
                     </Stack.Navigator>
                 ) : (isSignedIn === null) ?
                 (
@@ -89,5 +100,6 @@ export default function App() {
                     )
             }
         </NavigationContainer>
+        
     );
 }
