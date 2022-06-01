@@ -1,11 +1,11 @@
 import {TextInput, View, StyleSheet, Platform} from "react-native";
-import {FontAwesome5} from "@expo/vector-icons";
+import {FontAwesome} from "@expo/vector-icons";
 import React from "react";
 
-export const groupChatInput = ({ onChangeText, value }) => {
+export const GroupChatInput = ({ onChangeText, value }) => {
     return (
       <View style={styles.container}>
-        <FontAwesome name="group chat" size={24} color="black" />
+        <FontAwesome name="long-arrow-right" size={24} color="black" />
         <TextInput
           testID="groupChatInput"
           style={styles.input}
@@ -17,7 +17,7 @@ export const groupChatInput = ({ onChangeText, value }) => {
     );
   };
   
-  /*const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     container: {
       flexDirection: "row",
       marginTop: Platform.OS === "web" ? 10 : 5,
@@ -35,4 +35,4 @@ export const groupChatInput = ({ onChangeText, value }) => {
       paddingRight: 15,
       overflow: "hidden",
     },
-  });*/
+  });
