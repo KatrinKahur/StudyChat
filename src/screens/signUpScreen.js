@@ -1,9 +1,8 @@
-//import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform } from 'react-native';
 import { TextInput } from 'react-native';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
-import { getDatabase, ref, set, onValue, child, get, onChildAdded, push } from "firebase/database";
+import { getDatabase, ref, set, child, get } from "firebase/database";
 
 export default class Signup extends Component {
   constructor() {
@@ -12,7 +11,7 @@ export default class Signup extends Component {
       displayName: '',
       email: '',
       password: '',
-      isLoading: false
+      loading: false
     }
   }
 
@@ -24,25 +23,26 @@ export default class Signup extends Component {
       .then((snapshot) => {
         var students = [];
         snapshot.forEach(childSnapshot => {
-          students.push(childSnapshot.val());
+          students.push(childSnapshot.value());
         });
         addAllItems(students);
       })
 
   }
 
-  updateInputVal = (val, prop) => {
+  updatevalueue = (value, prop) => {
     const state = this.state;
-    state[prop] = val;
+    state[prop] = value;
     this.setState(state);
   }
+
   registerUser = () => {
     if (this.state.email === '' && this.state.password === '' && this.state.displayName === '') {
       console.warn('Enter details to signup!')
-    } else if (!this.state.email.includes('@')) {
-      console.error('Invalid email')
-    } else if (!(this.state.email.includes('.com'))) {
-      console.error('Invalid email')
+    } else if (!this.state.email.includes('@') || !this.state.email.includes('.')) {
+      console.error('invalid email')
+    } else if (!(this.state.email.includes('.com')) || !(this.state.email.includes('.se')) || !(this.state.email.includes('.net'))) {
+      console.error('invalid email')
     } else if (this.state.password === '') {
       console.error('Password is required!')
     } else if (this.state.email === '') {
@@ -53,7 +53,7 @@ export default class Signup extends Component {
       console.error('Username is required!')
     } else {
       this.setState({
-        isLoading: true,
+        loading: true,
       })
 
       createUserWithEmailAndPassword(getAuth(), this.state.email, this.state.password)
@@ -64,17 +64,17 @@ export default class Signup extends Component {
             this.props.model.setUserName(getAuth().currentUser.displayName);
             console.log('User registered successfully!')
             if (getAuth().currentUser.displayName === null) {
-              console.log("username is never set");
+              console.error("username is never set");
             };
             const db = getDatabase();
             set(ref(db, 'users/' + res.user.uid), {
               username: res.user.displayName,
               email: res.user.email,
             });
-            console.log("FINISH ADDED USER")
+            console.log("FINISH, ADDED A USER")
           });
           this.setState({
-            isLoading: false,
+            loading: false,
             displayName: '',
             email: '',
             password: ''
@@ -84,7 +84,7 @@ export default class Signup extends Component {
     }
   }
   render() {
-    if (this.state.isLoading) {
+    if (this.state.loading) {
       return (
         <View style={styles.preloader}>
           <ActivityIndicator size="large" color="#9E9E9E" />
@@ -98,21 +98,21 @@ export default class Signup extends Component {
 
         <TextInput style={styles.textinput}
           placeholder="Full name"
-          value={this.state.displayName}
-          onChangeText={(val) => this.updateInputVal(val, 'displayName')}
+          valueue={this.state.displayName}
+          onChangeText={(value) => this.updatevalueue(value, 'displayName')}
         />
 
         <TextInput style={styles.textinput}
           placeholder="Email"
-          value={this.state.email}
-          onChangeText={(val) => this.updateInputVal(val, 'email')}
+          valueue={this.state.email}
+          onChangeText={(value) => this.updatevalueue(value, 'email')}
         />
 
         <TextInput style={styles.textinput}
           placeholder="Password"
           secureTextEntry={true}
-          value={this.state.password}
-          onChangeText={(val) => this.updateInputVal(val, 'password')}
+          valueue={this.state.password}
+          onChangeText={(value) => this.updatevalueue(value, 'password')}
         />
 
         <TouchableOpacity style={styles.button}

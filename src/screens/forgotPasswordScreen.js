@@ -26,7 +26,8 @@ export default class ForgotPassword extends Component {
   };
 
   handlePasswordReset = () => {
-    if (this.state.email === '' && !(this.state.email.includes('@')) || !(this.state.email.includes('.se' || '.com'))) {
+    if (this.state.email === '' || !(this.state.email.includes('@')) || !(this.state.email.includes('.com'))
+      || !(this.state.email.includes('.com')) || !(this.state.email.includes('.net'))) {
       console.error('Invalid email, enter your registered email.')
     }
     else {
