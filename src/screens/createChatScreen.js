@@ -6,7 +6,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { Component } from 'react';
 import MainScreen from "./mainScreen";
 import { StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform, Array} from 'react-native';
-import { TextInput } from 'react-native';
+import {GroupChatInput} from "../components/groupChatInput";
 import { NavigationContainer, Route } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import {getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
@@ -53,16 +53,6 @@ export default class extends Component {
       user5: '',
       user6: ''
     });
-
-    /*get(ref(getDatabase(), 'groupChats')).then((snapshot) => {
-      snapshot.forEach((child) => {
-          if (child.val().name === this.state['chatName']) {
-              update(ref(getDatabase(), 'groupChats/' + child.key) + '/users', {user})
-          }
-      })
-    });*/
-
-  
     this.props.navigation.navigate('Group Chat List');
   }
  
@@ -79,7 +69,7 @@ export default class extends Component {
 
         <Text style={styles.header}>Create a new group chat</Text>
 
-        <TextInput style={styles.textinput} 
+        <GroupChatInput
         placeholder="Chat name" 
         value={this.state.displayName}
         onChangeText={(val) => this.updateName(val, "chatName")}
